@@ -18,7 +18,7 @@ export const retrieveLecturers = async (req, res) => {
 
 export const retrieveBookings = async (req, res) => {
     try {
-        const bookings = await Booking.find({ student: req.query.username });
+        const bookings = await Booking.find({ $or: [{ student: req.query.username }, { lecturer: req.query.username }] });
         return res.status(200).json({ bookings });
     } catch (err) {
         console.error("Error retrieving bookings:", err);

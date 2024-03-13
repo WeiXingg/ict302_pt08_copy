@@ -89,8 +89,17 @@ const Dashboard = () => {
                 onClick={() => handleBookingClick(booking)}
               >
                 <div>
-                  <p>Lecturer: {booking.lecturer}</p>
-                  <p>Date: {formatDate(booking.date)}</p>
+                  {user.usertype === "student" ? (
+                    <>
+                      <p>Lecturer: {booking.lecturer}</p>
+                      <p>Date: {formatDate(booking.date)}</p>
+                    </>
+                  ) : user.usertype === "staff" ? (
+                    <>
+                      <p>Student: {booking.student}</p>
+                      <p>Date: {formatDate(booking.date)}</p>
+                    </>
+                  ) : null}
                 </div>
               </div>
             ))

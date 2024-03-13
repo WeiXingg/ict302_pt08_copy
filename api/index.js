@@ -5,7 +5,7 @@ import authRoute from "./routes/auth.js"
 import usersRoute from "./routes/users.js"
 import bookingRoute from "./routes/booking.js"
 import scheduleRoute from "./routes/schedule.js"
-import cors from "cors";
+import cors from "cors"
 
 const app = express();
 

@@ -1,0 +1,26 @@
+.booking-content {
+  align-items: center;
+  text-align: center;
+  margin: 100px;
+}
+
+.booking-content h2 {
+  margin-bottom: 10px;
+}
+
+.booking-content input[type="file"] {
+  margin-bottom: 10px;
+}
+
+.booking-content button {
+  padding: 10px 20px;
+  background-color: #E12744;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.booking-content button:hover {
+  background-color: #b51d38;
+}

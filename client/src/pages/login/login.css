@@ -1,0 +1,49 @@
+.login {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  background-color: #f9f9f9;
+  margin-top: 100px;
+}
+
+.loginTitle {
+  margin-bottom: 20px;
+}
+
+.lContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.lInput {
+  height: 40px;
+  padding: 10px;
+  margin-bottom: 20px;
+}
+
+.lButton {
+  height: 40px;
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  background-color: #E12744;
+  color: #ffffff;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.lButton:disabled {
+  background-color: #b51d38;
+  cursor: not-allowed;
+}
+
+.error-message {
+  color: #ff0000;
+  font-size: 14px;
+  margin-top: 10px;
+  text-align: center;
+}

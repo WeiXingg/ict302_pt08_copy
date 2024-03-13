@@ -1,0 +1,67 @@
+label {
+  font-weight: bold;
+  display: block;
+  margin-bottom: 8px;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+select {
+  width: calc(100% - 20px); /* Adjusted width to account for padding */
+  padding: 10px;
+  margin-bottom: 10px; /* Adjusted margin bottom to match other elements */
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+
+button[type="submit"] {
+  width: calc(100% - 20px); /* Adjusted width to account for padding */
+  padding: 10px;
+  margin-top: 10px; /* Added margin top to match other elements */
+  border: none;
+  border-radius: 5px;
+  background-color: #E12744;
+  color: #ffffff;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+button[type="submit"]:hover {
+  background-color: #b51d38;
+}
+
+.error-message {
+  color: #ff0000;
+  font-size: 14px;
+  margin-top: 10px;
+  text-align: center;
+}
+
+select {
+  width: 95%;
+}
+
+.register-container {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  background-color: #f9f9f9;
+  margin-top: 100px;
+}
+
+.registerTitle {
+  margin-bottom: 20px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label:after {
+  content: " *";
+  color: red;
+}

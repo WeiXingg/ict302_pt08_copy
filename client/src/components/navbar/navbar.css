@@ -1,0 +1,53 @@
+.navbar {
+  height: 50px;
+  background-color: #CCCCCC;
+  display: flex;
+  justify-content: center;
+}
+
+.navContainer {
+  width: 100%;
+  max-width: 1024px;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.leftSection {
+  display: flex;
+  align-items: center;
+  margin-left: 300px;
+}
+
+.rightSection {
+  display: flex;
+  align-items: center;
+}
+
+.homeButton {
+  color: #ffffff;
+  font-weight: 500;
+  background-color: #E12744;
+  border: none;
+  border-radius: 20px;
+  outline: none;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.navButton {
+  margin-left: 20px;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.loggedInName {
+  color: black;
+}
+
+.timer {
+  color: maroon;
+  margin-left: 5px;
+}

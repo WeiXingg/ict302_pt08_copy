@@ -30,7 +30,8 @@ const Booking = () => {
                 }
 
                 // Fetch lecturer data
-                const lecturerResponse = await fetch(`http://localhost:8800/api/schedule/retrievelecturers?access_token=${encodeURIComponent(user?.access_token)}`, {
+                const lecturerResponse = await fetch(`http://localhost:8800/api/schedule/retrievelecturers?` +
+                    `access_token=${encodeURIComponent(user?.access_token)}`, {
                     method: "GET",
                     headers: {
                         "Content-Type": "application/json"
@@ -46,7 +47,8 @@ const Booking = () => {
 
                 // Fetch booked dates if a lecturer is selected
                 if (selectedLecturer) {
-                    const bookedDatesResponse = await fetch(`http://localhost:8800/api/users/${selectedLecturer}?access_token=${encodeURIComponent(user?.access_token)}`, {
+                    const bookedDatesResponse = await fetch(`http://localhost:8800/api/users/${selectedLecturer}?` +
+                        `access_token=${encodeURIComponent(user?.access_token)}`, {
                         method: "GET",
                         headers: {
                             "Content-Type": "application/json"
@@ -79,7 +81,8 @@ const Booking = () => {
         }
 
         try {
-            const check = await fetch(`http://localhost:8800/api/users/${selectedLecturer}?access_token=${encodeURIComponent(user?.access_token)}`, {
+            const check = await fetch(`http://localhost:8800/api/users/${selectedLecturer}?` +
+                `access_token=${encodeURIComponent(user?.access_token)}`, {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json"
@@ -111,11 +114,16 @@ const Booking = () => {
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify({ access_token: user?.access_token || "", lecturer: selectedLecturer, student: user.username, date: date }),
+                body: JSON.stringify({
+                    access_token: user?.access_token || "",
+                    lecturer: selectedLecturer,
+                    student: user.username, date: date
+                }),
             });
 
             if (response.ok) {
-                const updateBooked = await fetch(`http://localhost:8800/api/users/${selectedLecturer}?access_token=${encodeURIComponent(user?.access_token)}`, {
+                const updateBooked = await fetch(`http://localhost:8800/api/users/${selectedLecturer}?` +
+                    `access_token=${encodeURIComponent(user?.access_token)}`, {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
@@ -198,7 +206,11 @@ const Booking = () => {
                         <h3>Pick a Day and Time</h3>
                     </div>
                 )}
-                {isScheduled && (<span className="lecturerSelected">Lecturer: {selectedLecturer}</span>)}
+                {isScheduled && (
+                    <span
+                        className="lecturerSelected">Lecturer: {selectedLecturer}
+                    </span>
+                )}
                 <DayTimePicker
                     timeSlotSizeMinutes={30}
                     isLoading={isScheduling}
@@ -211,12 +223,30 @@ const Booking = () => {
                     doneText="Booking confirmed!"
                 />
                 {isScheduled && (
-                    <button className="home" onClick={() => navigate("/dashboard")}>Home</button>
+                    <button
+                        className="home"
+                        onClick={() => navigate("/dashboard")}>Home
+                    </button>
                 )}
             </div>
-            {showLecturerAlert && <CustomAlert message="Please select a lecturer" onClose={() => handleCloseAlert("LecturerAlert")} />}
-            {showBookedAlert && <CustomAlert message="This date and time slot is already booked. Please choose a different slot." onClose={() => handleCloseAlert("BookedAlert")} />}
-            {showLogoutAlert && (<CustomAlert message="Your session has expired, please relogin." onClose={handleLogout} />)}
+            {showLecturerAlert && (
+                <CustomAlert
+                    message="Please select a lecturer"
+                    onClose={() => handleCloseAlert("LecturerAlert")}
+                />
+            )}
+            {showBookedAlert && (
+                <CustomAlert
+                    message="This date and time slot is already booked. Please choose a different slot."
+                    onClose={() => handleCloseAlert("BookedAlert")}
+                />
+            )}
+            {showLogoutAlert && (
+                <CustomAlert
+                    message="Your session has expired, please relogin."
+                    onClose={handleLogout}
+                />
+            )}
         </div>
     );
 };

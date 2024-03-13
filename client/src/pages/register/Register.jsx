@@ -125,9 +125,17 @@ const Register = () => {
                     </div>
                     <button type="submit">Sign up</button>
                 </form>
-                {errorMessage && <div className="error-message">{errorMessage}</div>}
+                {errorMessage &&
+                    <div
+                        className="error-message">{errorMessage}
+                    </div>}
             </div>
-            {showAlert && <CustomAlert message="User created successfully!" onClose={handleAlertClose} />}
+            {showAlert && (
+                <CustomAlert
+                    message="User created successfully!"
+                    onClose={handleAlertClose}
+                />
+            )}
         </div>
     );
 };

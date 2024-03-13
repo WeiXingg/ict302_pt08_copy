@@ -77,7 +77,10 @@ const Login = () => {
                             Login
                         </button>
                     </form>
-                    {errorMessage && <span className="error-message">{errorMessage}</span>}
+                    {errorMessage &&
+                        <span
+                            className="error-message">{errorMessage}
+                        </span>}
                 </div>
             </div>
         </div>

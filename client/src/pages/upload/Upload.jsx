@@ -57,14 +57,18 @@ const Upload = () => {
 
     return (
         <div>
-            <Navbar isUploadPage={true}/>
+            <Navbar isUploadPage={true} />
             <Header />
             <div className="booking-content">
                 <h2>Upload CSV File</h2>
                 <input type="file" accept=".csv" onChange={handleFileUpload} />
                 <button onClick={handleUploadButtonClick}>Upload</button>
             </div>
-            {showLogoutAlert && (<CustomAlert message="Your session has expired, please relogin." onClose={handleLogout} />)}
+            {showLogoutAlert && (
+                <CustomAlert
+                    message="Your session has expired, please relogin."
+                    onClose={handleLogout}
+                />)}
         </div>
     );
 };

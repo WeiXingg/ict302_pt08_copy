@@ -13,7 +13,7 @@ const Home = () => {
       <img src={muLogo} alt="Murdoch University" className="muLogo" />
         <h1 className="homeTitle">Welcome to AppointMate!</h1>
         <p className="homeDescription">
-          If you're new here, <Link to="/register">sign up</Link> for an account to get started.
+          If you're new here, <Link to="/register">Sign up</Link> for an account to get started.
           <br/><br/><br/>
           Already have an account? Welcome back! Simply <Link to="/login">Login</Link> to continue.
         </p>

@@ -1,7 +1,7 @@
-.booking-content {
+.centered-container {
   align-items: center;
   text-align: center;
-  margin: 100px;
+  margin-top: 20px;
 }
 
 .booking-content h2 {
@@ -9,10 +9,18 @@
 }
 
 .booking-content input[type="file"] {
+  margin-top: 20px;
   margin-bottom: 10px;
 }
 
-.booking-content button {
+.booking-content input[type="file"]::-webkit-file-upload-button {
+  padding: 2px 4px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.uploadButton {
+  margin-top: 20px;
   padding: 10px 20px;
   background-color: #E12744;
   color: white;
@@ -21,6 +29,6 @@
   cursor: pointer;
 }
 
-.booking-content button:hover {
+.uploadButton:hover {
   background-color: #B51D38;
 }

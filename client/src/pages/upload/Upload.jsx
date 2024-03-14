@@ -65,10 +65,12 @@ const Upload = () => {
         <div>
             <Navbar isUploadPage={true} />
             <Header />
-            <div className="booking-content">
-                <h2>Upload CSV File</h2>
-                <input type="file" accept=".csv" onChange={handleFileUpload} />
-                <button onClick={handleUploadButtonClick}>Upload</button>
+            <div className="centered-container">
+                <div className="booking-content">
+                    <h2>Upload CSV File</h2>
+                    <input type="file" accept=".csv" onChange={handleFileUpload} />
+                </div>
+                <button className="uploadButton" onClick={handleUploadButtonClick}>Upload</button>
             </div>
             {showLogoutAlert && (
                 <CustomAlert

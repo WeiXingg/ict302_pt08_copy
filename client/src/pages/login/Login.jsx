@@ -73,7 +73,7 @@ const Login = () => {
                             onChange={handleChange}
                             className="lInput"
                         />
-                        <button type="submit" disabled={loading} className="lButton">
+                        <button disabled={loading} className="lButton">
                             Login
                         </button>
                     </form>

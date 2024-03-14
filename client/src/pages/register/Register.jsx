@@ -91,115 +91,122 @@ const Register = () => {
         <div>
             <Navbar isRegisterPage={true} />
             <Header />
-            <div className="register-container">
-                <h2 className="registerTitle">Get Started with AppointMate</h2>
-                <form onSubmit={handleSubmit}>
-                    <div className="form-group">
-                        <label htmlFor="userType">User Type</label>
-                        <select
-                            id="userType"
-                            value={usertype}
-                            onChange={(e) => setUserType(e.target.value)}
-                            required
-                        >
-                            <option value="student">Student</option>
-                            <option value="staff">Staff</option>
-                        </select>
-                    </div>
-                    <div className="form-group">
-                        <label htmlFor="name">Name</label>
-                        <input
-                            type="text"
-                            id="name"
-                            value={username}
-                            onChange={(e) => setName(e.target.value)}
-                            placeholder="Enter your name"
-                            required
-                        />
-                    </div>
-                    <div className="form-group">
-                        <label htmlFor="email">Email Address</label>
-                        <input
-                            type="email"
-                            id="email"
-                            value={email}
-                            onChange={(e) => {
-                                const { value } = e.target;
-                                setEmail(value)
-                                setIsValidEmail(validateEmail(value));
-                                setErrorMessage("");
-                            }}
-                            placeholder="Enter your email address"
-                            required
-                        />
-                        {!isValidEmail &&
-                            <div
-                                className="error-message">Please enter a valid email address.
-                            </div>
-                        }
-                    </div>
-                    {usertype === "student" && (
+            <div className="register">
+                <div className="rContainer">
+                    <h2 className="registerTitle">Get Started with AppointMate</h2>
+                    <form onSubmit={handleSubmit}>
                         <div className="form-group">
-                            <label htmlFor="studentid">Student ID</label>
+                            <label htmlFor="userType">User Type</label>
+                            <select
+                                id="userType"
+                                value={usertype}
+                                onChange={(e) => setUserType(e.target.value)}
+                                required
+                            >
+                                <option value="student">Student</option>
+                                <option value="staff">Staff</option>
+                            </select>
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="name">Name</label>
                             <input
                                 type="text"
-                                id="studentid"
-                                value={studentid}
-                                onChange={(e) => {
-                                    const { value } = e.target;
-                                    setStudentId(value);
-                                    setIsValidStudentId(validateStudentId(value));
-                                    setErrorMessage("");
-                                }}
-                                placeholder="Enter your student ID"
+                                id="name"
+                                value={username}
+                                onChange={(e) => setName(e.target.value)}
+                                placeholder="Enter your name"
+                                className="rInput"
                                 required
                             />
-                            {!isValidStudentId &&
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="email">Email Address</label>
+                            <input
+                                type="email"
+                                id="email"
+                                value={email}
+                                onChange={(e) => {
+                                    const { value } = e.target;
+                                    setEmail(value)
+                                    setIsValidEmail(validateEmail(value));
+                                    setErrorMessage("");
+                                }}
+                                placeholder="Enter your email address"
+                                className="rInput"
+                                required
+                            />
+                            {!isValidEmail &&
                                 <div
-                                    className="error-message">Please enter a valid student ID (7 digits).
+                                    className="error-message">Please enter a valid email address.
                                 </div>
                             }
                         </div>
-                    )}
-                    <div className="form-group">
-                        <label htmlFor="password">Password</label>
-                        <input
-                            type="password"
-                            id="password"
-                            value={password}
-                            onChange={(e) => {
-                                setPassword(e.target.value)
-                                setPasswordsMatch(true);
-                            }}
-                            placeholder="Enter your password"
-                            required
-                        />
-                    </div>
-                    <div className="form-group">
-                        <label htmlFor="confirmPassword">Confirm Password</label>
-                        <input
-                            type="password"
-                            id="confirmPassword"
-                            value={confirmPassword}
-                            onChange={(e) => {
-                                setConfirmPassword(e.target.value)
-                                setPasswordsMatch(true);
-                            }}
-                            placeholder="Confirm your password"
-                            required
-                        />
-                        {!passwordsMatch &&
-                            <div
-                                className="error-message">Passwords do not match.
+                        {usertype === "student" && (
+                            <div className="form-group">
+                                <label htmlFor="studentid">Student ID</label>
+                                <input
+                                    type="text"
+                                    id="studentid"
+                                    value={studentid}
+                                    onChange={(e) => {
+                                        const { value } = e.target;
+                                        setStudentId(value);
+                                        setIsValidStudentId(validateStudentId(value));
+                                        setErrorMessage("");
+                                    }}
+                                    placeholder="Enter your student ID"
+                                    className="rInput"
+                                    required
+                                />
+                                {!isValidStudentId &&
+                                    <div
+                                        className="error-message">Please enter a valid student ID (7 digits).
+                                    </div>
+                                }
                             </div>
-                        }
-                    </div>
-                    <button type="submit">Sign up</button>
-                </form>
-                {errorMessage &&
-                    <div
-                        className="error-message">{errorMessage}
-                    </div>}
+                        )}
+                        <div className="form-group">
+                            <label htmlFor="password">Password</label>
+                            <input
+                                type="password"
+                                id="password"
+                                value={password}
+                                onChange={(e) => {
+                                    setPassword(e.target.value)
+                                    setPasswordsMatch(true);
+                                }}
+                                placeholder="Enter your password"
+                                className="rInput"
+                                required
+                            />
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="confirmPassword">Confirm Password</label>
+                            <input
+                                type="password"
+                                id="confirmPassword"
+                                value={confirmPassword}
+                                onChange={(e) => {
+                                    setConfirmPassword(e.target.value)
+                                    setPasswordsMatch(true);
+                                }}
+                                placeholder="Confirm your password"
+                                className="rInput"
+                                required
+                            />
+                            {!passwordsMatch &&
+                                <div
+                                    className="error-message">Passwords do not match.
+                                </div>
+                            }
+                        </div>
+                        <button className="rButton">Sign up</button>
+                    </form>
+                    {errorMessage &&
+                        <div
+                            className="error-message">{errorMessage}
+                        </div>}
+                </div>
             </div>
             {showAlert && (
                 <CustomAlert

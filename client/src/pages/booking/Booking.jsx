@@ -27,8 +27,6 @@ const Booking = () => {
                 if (!user) {
                     return;
                 }
-
-                // Fetch lecturer data
                 const lecturerResponse = await fetch(`http://localhost:8800/api/schedule/retrievelecturers?` +
                     `access_token=${encodeURIComponent(user?.access_token)}`, {
                     method: "GET",
@@ -48,8 +46,6 @@ const Booking = () => {
                 } else {
                     console.error("Error fetching lecturers.", lecturerResponse.message);
                 }
-
-                // Fetch booked dates if a lecturer is selected
                 if (selectedLecturer) {
                     const bookedDatesResponse = await fetch(`http://localhost:8800/api/users/${selectedLecturer}?` +
                         `access_token=${encodeURIComponent(user?.access_token)}`, {

@@ -27,6 +27,7 @@
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  width: 150px;
 }
 
 .uploadButton:hover {

@@ -15,7 +15,6 @@ export const retrieveLecturers = async (req, res) => {
         return res.status(200).json({ lecturers });
     } catch (err) {
         console.error("Error retrieving lecturers.");
-        return res.status(500).json({ message: "Internal server error" });
     }
 }
 
@@ -25,7 +24,6 @@ export const retrieveBookings = async (req, res) => {
         return res.status(200).json({ bookings });
     } catch (err) {
         console.error("Error retrieving bookings.");
-        return res.status(500).json({ message: "Internal server error" });
     }
 }
 
@@ -53,6 +51,5 @@ export const deleteBookedDate = async (req, res) => {
         res.status(200).json({ user, booking });
     } catch (err) {
         console.error("Error deleting booked date.");
-        return res.status(500).json({ message: "Internal server error" });
     }
 };

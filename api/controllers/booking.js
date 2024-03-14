@@ -6,7 +6,7 @@ export const createBooking = async (req, res) => {
         const savedBooking = await newBooking.save();
         res.status(200).json(savedBooking);
     } catch (err) {
-        console.error("Error creating new booking:", err);
+        console.error("Error creating new booking.");
         return res.status(500).json({ message: "Internal server error" });
     }
 }
@@ -20,7 +20,7 @@ export const updateBooking = async (req, res) => {
         );
         res.status(200).json(updatedBooking);
     } catch (err) {
-        console.error("Error updating booking:", err);
+        console.error("Error updating booking.");
         return res.status(500).json({ message: "Internal server error" });
     }
 }
@@ -30,7 +30,7 @@ export const deleteBooking = async (req, res) => {
         await Booking.findByIdAndDelete(req.params.id);
         res.status(200).json("Booking has been deleted.");
     } catch (err) {
-        console.error("Error deleting booking:", err);
+        console.error("Error deleting booking.");
         return res.status(500).json({ message: "Internal server error" });
     }
 }
@@ -40,7 +40,7 @@ export const getBooking = async (req, res) => {
         const retrievedBooking = await Booking.findById(req.params.id);
         res.status(200).json(retrievedBooking);
     } catch (err) {
-        console.error("Error getting booking:", err);
+        console.error("Error getting booking.");
         return res.status(500).json({ message: "Internal server error" });
     }
 }
@@ -50,7 +50,7 @@ export const getAllBooking = async (req, res) => {
         const retrievedAllBooking = await Booking.find();
         res.status(200).json(retrievedAllBooking);
     } catch (err) {
-        console.error("Error getting all bookings:", err);
+        console.error("Error getting all bookings.");
         return res.status(500).json({ message: "Internal server error" });
     }
 }

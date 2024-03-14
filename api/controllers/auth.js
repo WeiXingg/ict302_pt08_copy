@@ -49,7 +49,7 @@ export const register = async (req, res) => {
         await newUser.save();
         res.status(200).send("User has been created.");
     } catch (err) {
-        console.error("Error registering user:", err);
+        console.error("Error registering user.");
         return res.status(500).json({ message: "Internal server error" });
     }
 }
@@ -73,7 +73,7 @@ export const login = async (req, res) => {
             .status(200)
             .json({ ...otherDetails, isAdmin: user.isAdmin, access_token: token });
     } catch (err) {
-        console.error("Error logging in:", err);
+        console.error("Error logging in.");
         return res.status(500).json({ message: "Internal server error" });
     }
 }

@@ -10,7 +10,7 @@ export const updateUser = async (req, res) => {
         );
         res.status(200).json(updatedUser);
     } catch (err) {
-        console.error("Error updating user:", err);
+        console.error("Error updating user.");
         return res.status(500).json({ message: "Internal server error" });
     }
 }
@@ -20,7 +20,7 @@ export const deleteUser = async (req, res) => {
         await User.findByIdAndDelete(req.params.id);
         res.status(200).json("User has been deleted.");
     } catch (err) {
-        console.error("Error deleting user:", err);
+        console.error("Error deleting user.");
         return res.status(500).json({ message: "Internal server error" });
     }
 }
@@ -41,7 +41,7 @@ export const getUser = async (req, res) => {
         }
         res.status(200).json(retrieveUser);
     } catch (err) {
-        console.error("Error getting user:", err);
+        console.error("Error getting user.");
         return res.status(500).json({ message: "Internal server error" });
     }
 }
@@ -51,7 +51,7 @@ export const getAllUser = async (req, res) => {
         const retrieveAllUser = await User.find();
         res.status(200).json(retrieveAllUser);
     } catch (err) {
-        console.error("Error getting users:", err);
+        console.error("Error getting users.");
         return res.status(500).json({ message: "Internal server error" });
     }
 }
@@ -71,7 +71,7 @@ export const addBookedDate = async (req, res) => {
         await user.save();
         res.status(200).json(user);
     } catch (err) {
-        console.error("Error adding booked date:", err);
+        console.error("Error adding booked date.");
         return res.status(500).json({ message: "Internal server error" });
     }
 }

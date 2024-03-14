@@ -110,6 +110,8 @@ const Dashboard = () => {
         );
       });
 
+      bookingsForDay.sort((a, b) => new Date(a.date) - new Date(b.date));
+
       calendar.push(
         <div key={date} className="calendar-day">
           <div className="day-number">{day}</div>
@@ -146,6 +148,7 @@ const Dashboard = () => {
     <div>
       <Navbar />
       <Header />
+      <h1 className="dashboardHeader">View your appointments here!</h1>
       <div className="calendar">
         <div className="calendar-header">
           <button onClick={prevMonth}>&lt;</button>

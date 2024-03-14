@@ -1,3 +1,9 @@
+.dashboardHeader {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 28px;
+}
+
 .calendar {
   font-family: Arial, sans-serif;
   width: 90%;

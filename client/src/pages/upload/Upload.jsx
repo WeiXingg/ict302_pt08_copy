@@ -36,19 +36,26 @@ const Upload = () => {
 
     const handleUploadButtonClick = () => {
         if (csvFile) {
-            const reader = new FileReader();
+            const fileName = csvFile.name;
+            const csvRegex = /^[^.]+\.(csv)$/i;
+            if (csvRegex.test(fileName)) {
+                const reader = new FileReader();
 
-            reader.onload = () => {
-                const csvData = reader.result;
-                console.log("Uploaded CSV file:", csvData);
-                individualEmail(csvData);
-            };
+                reader.onload = () => {
+                    const csvData = reader.result;
+                    console.log("Uploaded CSV file:", csvData);
+                    individualEmail(csvData);
+                };
 
-            reader.readAsText(csvFile);
+                reader.readAsText(csvFile);
+            } else {
+                console.error("Please select a CSV file.");
+            }
         } else {
             console.error("No CSV file uploaded");
         }
     };
+
 
     const sendEmail = (name, email) => {
         // email logic

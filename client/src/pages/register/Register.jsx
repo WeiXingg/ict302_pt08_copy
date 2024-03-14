@@ -10,20 +10,41 @@ const Register = () => {
     const [email, setEmail] = useState("");
     const [studentid, setStudentId] = useState("");
     const [password, setPassword] = useState("");
+    const [confirmPassword, setConfirmPassword] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
     const [showAlert, setShowAlert] = useState(false);
     const [usertype, setUserType] = useState("student");
+    const [isValidStudentId, setIsValidStudentId] = useState(true);
+    const [isValidEmail, setIsValidEmail] = useState(true);
+    const [passwordsMatch, setPasswordsMatch] = useState(true);
 
     const navigate = useNavigate();
 
     useEffect(() => {
         if (usertype !== "student") {
             setStudentId("");
+            setIsValidStudentId(true);
         }
     }, [usertype]);
 
     const handleSubmit = async (event) => {
         event.preventDefault();
+
+        if (usertype === "student" && !validateStudentId(studentid)) {
+            setIsValidStudentId(false);
+            return;
+        }
+
+        if (!validateEmail(email)) {
+            setIsValidEmail(false);
+            return;
+        }
+
+        if (password !== confirmPassword) {
+            setPasswordsMatch(false);
+            return;
+        }
+
         try {
             let requestBody;
             if (usertype === "student") {
@@ -56,6 +77,14 @@ const Register = () => {
     const handleAlertClose = () => {
         setShowAlert(false);
         navigate("/");
+    };
+
+    const validateStudentId = (id) => {
+        return /^\d{7}$/.test(id);
+    };
+
+    const validateEmail = (email) => {
+        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
     };
 
     return (
@@ -94,10 +123,20 @@ const Register = () => {
                             type="email"
                             id="email"
                             value={email}
-                            onChange={(e) => setEmail(e.target.value)}
+                            onChange={(e) => {
+                                const { value } = e.target;
+                                setEmail(value)
+                                setIsValidEmail(validateEmail(value));
+                                setErrorMessage("");
+                            }}
                             placeholder="Enter your email address"
                             required
                         />
+                        {!isValidEmail &&
+                            <div
+                                className="error-message">Please enter a valid email address.
+                            </div>
+                        }
                     </div>
                     {usertype === "student" && (
                         <div className="form-group">
@@ -105,11 +144,21 @@ const Register = () => {
                             <input
                                 type="text"
                                 id="studentid"
-                                value={usertype === "student" ? studentid : ""}
-                                onChange={(e) => setStudentId(e.target.value)}
+                                value={studentid}
+                                onChange={(e) => {
+                                    const { value } = e.target;
+                                    setStudentId(value);
+                                    setIsValidStudentId(validateStudentId(value));
+                                    setErrorMessage("");
+                                }}
                                 placeholder="Enter your student ID"
                                 required
                             />
+                            {!isValidStudentId &&
+                                <div
+                                    className="error-message">Please enter a valid student ID (7 digits).
+                                </div>
+                            }
                         </div>
                     )}
                     <div className="form-group">
@@ -118,10 +167,32 @@ const Register = () => {
                             type="password"
                             id="password"
                             value={password}
-                            onChange={(e) => setPassword(e.target.value)}
+                            onChange={(e) => {
+                                setPassword(e.target.value)
+                                setPasswordsMatch(true);
+                            }}
                             placeholder="Enter your password"
                             required
                         />
+                    </div>
+                    <div className="form-group">
+                        <label htmlFor="confirmPassword">Confirm Password</label>
+                        <input
+                            type="password"
+                            id="confirmPassword"
+                            value={confirmPassword}
+                            onChange={(e) => {
+                                setConfirmPassword(e.target.value)
+                                setPasswordsMatch(true);
+                            }}
+                            placeholder="Confirm your password"
+                            required
+                        />
+                        {!passwordsMatch &&
+                            <div
+                                className="error-message">Passwords do not match.
+                            </div>
+                        }
                     </div>
                     <button type="submit">Sign up</button>
                 </form>

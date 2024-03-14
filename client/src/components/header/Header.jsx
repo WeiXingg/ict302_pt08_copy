@@ -1,11 +1,11 @@
 import "./header.css"
-import logo from "../header/image.png"
+import headerLogo from "../header/headerlogo.png"
 
 const Header = () => {
   return (
     <div className="header">
       <div className="headerContainer">
-        <img src={logo} alt="AppointMate" className="logo" />
+        <img src={headerLogo} alt="AppointMate" className="headerLogo" />
       </div>
     </div>
   )

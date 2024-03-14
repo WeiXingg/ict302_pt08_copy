@@ -3,20 +3,22 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 30px;
+  min-height: 700px;
 }
 
 .bookingsTitle {
-  margin-bottom: 20px;
+  margin-bottom: 40px;
 }
 
 .bookingsContainer {
   max-width: 400px;
   margin: 0 auto;
   padding: 20px;
-  border: 1px solid #CCC;
+  border: 2px solid #CCC;
   border-radius: 10px;
   background-color: #F9F9F9;
+  max-height: 500px;
+  overflow-y: auto;
 }
 
 .bookingItem {
@@ -27,7 +29,7 @@
 }
 
 .bookingItem.selected {
-  background-color: #F8d7da;
+  background-color: #F8D7DA;
   border: 2px solid #E12744;
   border-radius: 8px;
 }
@@ -44,5 +46,5 @@
 }
 
 .deleteButton:hover {
-  background-color: #b51d38;
+  background-color: #B51D38;
 }

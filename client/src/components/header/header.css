@@ -9,14 +9,12 @@
 .headerContainer {
   width: 100%;
   max-width: 1024px;
-  margin: 20px 0px 100px 0px;
+  margin: 10px 0px 20px 0px;
+  display: flex;
+  justify-content: center;
 }
 
-.headerTitle {
-  color: #E12744;
-}
-
-.headerDesc {
-  color: #E12744;
-  margin: 20px 0px;
+.logo {
+  width: 500px;
+  height: auto;
 }

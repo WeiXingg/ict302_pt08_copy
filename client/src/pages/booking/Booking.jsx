@@ -1,5 +1,5 @@
-import React, { useContext, useState, useEffect } from "react"
 import "./booking.css"
+import React, { useContext, useState, useEffect } from "react"
 import Navbar from "../../components/navbar/Navbar"
 import Header from "../../components/header/Header"
 import { useNavigate } from "react-router-dom"

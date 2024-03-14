@@ -8,32 +8,32 @@ input[type="text"],
 input[type="email"],
 input[type="password"],
 select {
-  width: calc(100% - 20px); /* Adjusted width to account for padding */
+  width: calc(100% - 20px);
   padding: 10px;
-  margin-bottom: 10px; /* Adjusted margin bottom to match other elements */
-  border: 1px solid #ccc;
+  margin-bottom: 10px;
+  border: 1px solid #CCC;
   border-radius: 5px;
   box-sizing: border-box;
 }
 
 button[type="submit"] {
-  width: calc(100% - 20px); /* Adjusted width to account for padding */
+  width: calc(100% - 20px);
   padding: 10px;
-  margin-top: 10px; /* Added margin top to match other elements */
+  margin-top: 10px;
   border: none;
   border-radius: 5px;
   background-color: #E12744;
-  color: #ffffff;
+  color: #FFFFFF;
   font-weight: bold;
   cursor: pointer;
 }
 
 button[type="submit"]:hover {
-  background-color: #b51d38;
+  background-color: #B51D38;
 }
 
 .error-message {
-  color: #ff0000;
+  color: #FF0000;
   font-size: 14px;
   margin-top: 10px;
   text-align: center;
@@ -47,10 +47,11 @@ select {
   max-width: 400px;
   margin: 0 auto;
   padding: 20px;
-  border: 1px solid #ccc;
+  border: 1px solid #CCC;
   border-radius: 10px;
-  background-color: #f9f9f9;
-  margin-top: 100px;
+  background-color: #F9F9F9;
+  margin-top: 50px;
+  margin-bottom: 50px;
 }
 
 .registerTitle {

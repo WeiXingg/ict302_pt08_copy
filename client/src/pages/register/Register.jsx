@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react"
 import "./register.css"
+import React, { useEffect, useState } from "react"
 import Navbar from "../../components/navbar/Navbar"
 import Header from "../../components/header/Header"
 import { useNavigate } from "react-router-dom"

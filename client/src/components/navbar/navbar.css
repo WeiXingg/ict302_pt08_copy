@@ -11,22 +11,22 @@
   color: white;
   display: flex;
   align-items: center;
-  justify-content: space-between;
 }
 
 .leftSection {
   display: flex;
+  justify-content: center;
   align-items: center;
-  margin-left: 300px;
 }
 
 .rightSection {
   display: flex;
   align-items: center;
+  margin-left: auto;
 }
 
 .homeButton {
-  color: #ffffff;
+  color: #FFFFFF;
   font-weight: 500;
   background-color: #E12744;
   border: none;
@@ -43,11 +43,16 @@
   cursor: pointer;
 }
 
+.navButton:disabled {
+  cursor: default;
+}
+
 .loggedInName {
   color: black;
+  margin-left: 250px;
 }
 
 .timer {
   color: maroon;
-  margin-left: 5px;
+  margin-left: 10px;
 }

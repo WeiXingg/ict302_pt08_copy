@@ -1,15 +1,11 @@
 import "./header.css"
+import logo from "../header/image.png"
 
 const Header = () => {
   return (
     <div className="header">
       <div className="headerContainer">
-        <h1 className="headerTitle">
-          Appointment Booking
-        </h1>
-        <p className="headerDesc">
-          
-        </p>
+        <img src={logo} alt="AppointMate" className="logo" />
       </div>
     </div>
   )

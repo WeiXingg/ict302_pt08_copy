@@ -1,10 +1,10 @@
+import "./dashboard.css"
 import React, { useContext, useState, useEffect } from "react"
 import { AuthContext } from "../../context/AuthContext"
 import Navbar from "../../components/navbar/Navbar"
 import Header from "../../components/header/Header"
 import CustomAlert from "../../components/alert/Alert"
 import CheckToken from "../../hooks/CheckToken"
-import "./dashboard.css"
 
 const Dashboard = () => {
   const { user, dispatch } = useContext(AuthContext);

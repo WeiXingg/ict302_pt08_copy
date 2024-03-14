@@ -1,5 +1,5 @@
-import React from 'react'
-import './alert.css'
+import React from "react"
+import "./alert.css"
 
 const CustomAlert = ({ message, onClose }) => {
     return (

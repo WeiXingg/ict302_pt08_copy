@@ -3,13 +3,16 @@ import Booking from "../models/Booking.js"
 
 export const retrieveLecturers = async (req, res) => {
     try {
-        const users = await User.find({ usertype: "staff" }, "username");
+        const users = await User.find({ usertype: "staff" }, "username isAdmin");
         // If no staff users are found, send an empty response
         if (!users || users.length === 0) {
             return res.status(200).json({ usernames: [] });
         }
-        const usernames = users.map(user => user.username);
-        return res.status(200).json({ usernames });
+        const lecturers = users.map(user => ({
+            username: user.username,
+            isAdmin: user.isAdmin
+        }));
+        return res.status(200).json({ lecturers });
     } catch (err) {
         console.error("Error retrieving lecturers:", err);
         return res.status(500).json({ message: "Internal server error" });

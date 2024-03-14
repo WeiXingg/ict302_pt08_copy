@@ -9,7 +9,6 @@ import CheckToken from "../../hooks/CheckToken"
 const Upload = () => {
     const [csvFile, setCsvFile] = useState(null);
     const { user, dispatch } = useContext(AuthContext);
-    // Check if token still valid
     const { showLogoutAlert, handleLogout } = CheckToken(user, dispatch);
 
     const handleFileUpload = (event) => {

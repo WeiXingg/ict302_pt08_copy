@@ -19,7 +19,6 @@ const Booking = () => {
     const [showLecturerAlert, setShowLecturerAlert] = useState(false);
     const [showBookedAlert, setShowBookedAlert] = useState(false);
     const navigate = useNavigate();
-    // Check if token still valid
     const { showLogoutAlert, handleLogout } = CheckToken(user, dispatch);
 
     useEffect(() => {
@@ -40,7 +39,12 @@ const Booking = () => {
 
                 if (lecturerResponse.ok) {
                     const lecturerData = await lecturerResponse.json();
-                    setLecturer(lecturerData.usernames);
+                    if (lecturerData.lecturers) {
+                        const filteredLecturers = lecturerData.lecturers.filter(lecturer => !lecturer.isAdmin);
+                        setLecturer(filteredLecturers);
+                    } else {
+                        console.error("No lecturers found in lecturerData.");
+                    }
                 } else {
                     console.error("Error fetching lecturers.", lecturerResponse.message);
                 }
@@ -199,7 +203,10 @@ const Booking = () => {
                             >
                                 {!selectedLecturer && <option value="">Select a lecturer</option>}
                                 {lecturer.map((lecturer, index) => (
-                                    <option key={index} value={lecturer}>{lecturer}</option>
+                                    <option
+                                        key={index}
+                                        value={lecturer.username}>{lecturer.username}
+                                    </option>
                                 ))}
                             </select>
                         </div>

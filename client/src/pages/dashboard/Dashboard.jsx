@@ -99,6 +99,16 @@ const Dashboard = () => {
     const daysInMonth = getDaysInMonth(currentDate);
     const firstDayOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1).getDay();
     const calendar = [];
+    const weekdays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+
+    // Add day labels
+    for (let i = 0; i < 7; i++) {
+      calendar.push(
+        <div key={`label-${i}`} className="day-names">
+          {weekdays[i]}
+        </div>
+      );
+    }
 
     // Blank placeholders for days before the first day of the month
     for (let i = 0; i < firstDayOfMonth; i++) {

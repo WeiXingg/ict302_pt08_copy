@@ -4,6 +4,7 @@ import { AuthContext } from "../../context/AuthContext"
 import Header from "../../components/header/Header";
 import Navbar from "../../components/navbar/Navbar";
 import CustomAlert from "../../components/alert/Alert"
+import ConfirmAlert from "../../components/alert/Confirmalert"
 import CheckToken from "../../hooks/CheckToken"
 
 const Dashboard = () => {
@@ -12,7 +13,8 @@ const Dashboard = () => {
   const [bookings, setBookings] = useState([]);
   const [selectedBooking, setSelectedBooking] = useState(null);
   const [showNoBookingAlert, setShowNoBookingAlert] = useState(false);
-  const [showDeleteAlert, setDeleteShowAlert] = useState(false);
+  const [showDeleteAlert, setShowDeleteAlert] = useState(false);
+  const [showBookingDeletedMessage, setShowBookingDeletedMessage] = useState(false);
   const { showLogoutAlert, handleLogout } = CheckToken(user, dispatch);
 
   useEffect(() => {
@@ -64,13 +66,17 @@ const Dashboard = () => {
     setSelectedBooking(null);
   };
 
-  const handleBookingAction = async (booking) => {
+  const handleDeleteConfirmation = () => {
+    if (!selectedBooking) {
+      setShowNoBookingAlert(true);
+    } else {
+      setShowDeleteAlert(true);
+    }
+  };
+
+  const handleBookingDeletion = async () => {
     try {
-      if (!selectedBooking) {
-        setShowNoBookingAlert(true);
-        return;
-      }
-      const response = await fetch(`http://localhost:8800/api/schedule/${booking.lecturer}/${encodeURIComponent(booking.date)}?` +
+      const response = await fetch(`http://localhost:8800/api/schedule/${selectedBooking.lecturer}/${encodeURIComponent(selectedBooking.date)}?` +
         `access_token=${encodeURIComponent(user?.access_token)}`, {
         method: "DELETE",
         headers: {
@@ -78,8 +84,9 @@ const Dashboard = () => {
         },
       });
       if (response.ok) {
-        setDeleteShowAlert(true);
-        setBookings(prevBookings => prevBookings.filter(prevBooking => prevBooking !== booking));
+        setShowDeleteAlert(false);
+        setShowBookingDeletedMessage(true);
+        setBookings(prevBookings => prevBookings.filter(prevBooking => prevBooking !== selectedBooking));
       } else {
         console.error("Failed to delete booking.");
       }
@@ -159,7 +166,7 @@ const Dashboard = () => {
       </div>
       <div className="buttonContainer">
         <button className="clear" onClick={clearSelection}>Clear Selection</button>
-        <button className="delete" onClick={() => handleBookingAction(selectedBooking)}>Delete</button>
+        <button className="delete" onClick={handleDeleteConfirmation}>Delete</button>
       </div>
       {showNoBookingAlert && (
         <CustomAlert
@@ -168,9 +175,16 @@ const Dashboard = () => {
         />
       )}
       {showDeleteAlert && (
+        <ConfirmAlert
+          message="Are you sure you want to delete this booking?"
+          onClose={() => setShowDeleteAlert(false)}
+          onConfirm={handleBookingDeletion}
+        />
+      )}
+      {showBookingDeletedMessage && (
         <CustomAlert
           message="Booking deleted successfully!"
-          onClose={() => setDeleteShowAlert(false)}
+          onClose={() => setShowBookingDeletedMessage(false)}
         />
       )}
       {showLogoutAlert && (

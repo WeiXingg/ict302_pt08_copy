@@ -52,7 +52,7 @@ const Register = () => {
             } else {
                 requestBody = JSON.stringify({ usertype, username, email, password });
             }
-            const response = await fetch("http://localhost:8800/api/auth/register", {
+            const response = await fetch(`${process.env.API}/auth/register`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"

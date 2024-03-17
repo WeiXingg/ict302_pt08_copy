@@ -1,4 +1,5 @@
 import "./login.css"
+import dotenv from "dotenv"
 import axios from "axios"
 import { useContext, useState } from "react"
 import { useNavigate } from "react-router-dom"
@@ -37,6 +38,8 @@ const Login = () => {
         }
 
         try {
+            const apiUrl = process.env.REACT_APP_API;
+            console.log(apiUrl);
             dispatch({ type: "LOGIN_START" });
             const res = await axios.post("https://ict302-pt08-api.vercel.app/api/auth/login", credentials);
             dispatch({ type: "LOGIN_SUCCESS", payload: res.data });

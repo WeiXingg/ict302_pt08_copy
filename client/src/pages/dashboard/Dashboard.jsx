@@ -77,7 +77,7 @@ const Dashboard = () => {
 
   const handleBookingDeletion = async () => {
     try {
-      const response = await fetch(apiUrl + `http://localhost:8800/api/schedule/${selectedBooking.lecturer}/${encodeURIComponent(selectedBooking.date)}?` +
+      const response = await fetch(apiUrl + `/schedule/${selectedBooking.lecturer}/${encodeURIComponent(selectedBooking.date)}?` +
         `access_token=${encodeURIComponent(user?.access_token)}`, {
         method: "DELETE",
         headers: {

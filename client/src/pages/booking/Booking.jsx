@@ -9,6 +9,7 @@ import CustomAlert from "../../components/alert/Alert"
 import CheckToken from "../../hooks/CheckToken"
 
 const Booking = () => {
+    const apiUrl = process.env.REACT_APP_API;
     const { user, dispatch } = useContext(AuthContext);
     const [selectedLecturer, setSelectedLecturer] = useState("");
     const [lecturer, setLecturer] = useState([]);

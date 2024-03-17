@@ -52,7 +52,7 @@ const Register = () => {
             } else {
                 requestBody = JSON.stringify({ usertype, username, email, password });
             }
-            const response = await fetch(`${process.env.API}/auth/register`, {
+            const response = await fetch(REACT_APP_API+"/auth/register", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"

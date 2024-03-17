@@ -38,7 +38,7 @@ const Login = () => {
 
         try {
             dispatch({ type: "LOGIN_START" });
-            const res = await axios.post(`${process.env.API}/auth/login`, credentials);
+            const res = await axios.post(process.env.API+"/auth/login", credentials);
             dispatch({ type: "LOGIN_SUCCESS", payload: res.data });
             navigate("/dashboard")
         } catch (err) {

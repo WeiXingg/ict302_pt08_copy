@@ -38,7 +38,7 @@ const Login = () => {
 
         try {
             dispatch({ type: "LOGIN_START" });
-            const res = await axios.post(process.env.REACT_APP_API+"/auth/login", credentials);
+            const res = await axios.post("https://ict302-pt08-api.vercel.app/api/auth/login", credentials);
             dispatch({ type: "LOGIN_SUCCESS", payload: res.data });
             navigate("/dashboard")
         } catch (err) {

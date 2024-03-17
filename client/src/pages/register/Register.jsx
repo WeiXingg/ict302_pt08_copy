@@ -17,6 +17,7 @@ const Register = () => {
     const [isValidStudentId, setIsValidStudentId] = useState(true);
     const [isValidEmail, setIsValidEmail] = useState(true);
     const [passwordsMatch, setPasswordsMatch] = useState(true);
+    const apiUrl = process.env.REACT_APP_API;
 
     const navigate = useNavigate();
 
@@ -52,7 +53,7 @@ const Register = () => {
             } else {
                 requestBody = JSON.stringify({ usertype, username, email, password });
             }
-            const response = await fetch(process.env.REACT_APP_API+"/auth/register", {
+            const response = await fetch(apiUrl + "/auth/register", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"

@@ -8,6 +8,7 @@ import ConfirmAlert from "../../components/alert/Confirmalert"
 import CheckToken from "../../hooks/CheckToken"
 
 const Dashboard = () => {
+  const apiUrl = process.env.REACT_APP_API;
   const { user, dispatch } = useContext(AuthContext);
   const [currentDate, setCurrentDate] = useState(new Date());
   const [bookings, setBookings] = useState([]);
@@ -23,7 +24,7 @@ const Dashboard = () => {
         if (!user) {
           return;
         }
-        const response = await fetch(`http://localhost:8800/api/schedule/retrievebookings?` +
+        const response = await fetch(apiUrl + `/schedule/retrievebookings?` +
           `username=${encodeURIComponent(user?.username)}&` +
           `access_token=${encodeURIComponent(user?.access_token)}`, {
           method: "GET",
@@ -76,7 +77,7 @@ const Dashboard = () => {
 
   const handleBookingDeletion = async () => {
     try {
-      const response = await fetch(`http://localhost:8800/api/schedule/${selectedBooking.lecturer}/${encodeURIComponent(selectedBooking.date)}?` +
+      const response = await fetch(apiUrl + `http://localhost:8800/api/schedule/${selectedBooking.lecturer}/${encodeURIComponent(selectedBooking.date)}?` +
         `access_token=${encodeURIComponent(user?.access_token)}`, {
         method: "DELETE",
         headers: {

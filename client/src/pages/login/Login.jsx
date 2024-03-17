@@ -8,6 +8,7 @@ import Navbar from "../../components/navbar/Navbar"
 import Header from "../../components/header/Header"
 
 const Login = () => {
+    const apiUrl = process.env.REACT_APP_API;
     const [credentials, setCredentials] = useState({
         username: "",
         password: "",
@@ -38,9 +39,8 @@ const Login = () => {
         }
 
         try {
-            const apiUrl = process.env.REACT_APP_API;
             dispatch({ type: "LOGIN_START" });
-            const res = await axios.post(apiUrl+"/auth/login", credentials);
+            const res = await axios.post(apiUrl + "/auth/login", credentials);
             dispatch({ type: "LOGIN_SUCCESS", payload: res.data });
             navigate("/dashboard")
         } catch (err) {

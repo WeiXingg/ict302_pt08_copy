@@ -22,12 +22,13 @@ const Booking = () => {
     const { showLogoutAlert, handleLogout } = CheckToken(user, dispatch);
 
     useEffect(() => {
+        const apiUrl = process.env.REACT_APP_API;
         const fetchData = async () => {
             try {
                 if (!user) {
                     return;
                 }
-                const lecturerResponse = await fetch(`http://localhost:8800/api/schedule/retrievelecturers?` +
+                const lecturerResponse = await fetch(apiUrl + `http://localhost:8800/api/schedule/retrievelecturers?` +
                     `access_token=${encodeURIComponent(user?.access_token)}`, {
                     method: "GET",
                     headers: {
@@ -47,7 +48,7 @@ const Booking = () => {
                     console.error("Error fetching lecturers.", lecturerResponse.message);
                 }
                 if (selectedLecturer) {
-                    const bookedDatesResponse = await fetch(`http://localhost:8800/api/users/${selectedLecturer}?` +
+                    const bookedDatesResponse = await fetch(apiUrl + `http://localhost:8800/api/users/${selectedLecturer}?` +
                         `access_token=${encodeURIComponent(user?.access_token)}`, {
                         method: "GET",
                         headers: {
@@ -81,7 +82,7 @@ const Booking = () => {
         }
 
         try {
-            const check = await fetch(`http://localhost:8800/api/users/${selectedLecturer}?` +
+            const check = await fetch(apiUrl + `http://localhost:8800/api/users/${selectedLecturer}?` +
                 `access_token=${encodeURIComponent(user?.access_token)}`, {
                 method: "GET",
                 headers: {
@@ -109,7 +110,7 @@ const Booking = () => {
                 return;
             }
 
-            const response = await fetch("http://localhost:8800/api/booking", {
+            const response = await fetch(apiUrl + "http://localhost:8800/api/booking", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -122,7 +123,7 @@ const Booking = () => {
             });
 
             if (response.ok) {
-                const updateBooked = await fetch(`http://localhost:8800/api/users/${selectedLecturer}?` +
+                const updateBooked = await fetch(apiUrl + `http://localhost:8800/api/users/${selectedLecturer}?` +
                     `access_token=${encodeURIComponent(user?.access_token)}`, {
                     method: "POST",
                     headers: {

@@ -17,6 +17,7 @@ const Register = () => {
     const [isValidStudentId, setIsValidStudentId] = useState(true);
     const [isValidEmail, setIsValidEmail] = useState(true);
     const [passwordsMatch, setPasswordsMatch] = useState(true);
+    const [isValidPassword, setIsValidPassword] = useState(true);
     const apiUrl = process.env.REACT_APP_API;
 
     const navigate = useNavigate();
@@ -43,6 +44,11 @@ const Register = () => {
 
         if (password !== confirmPassword) {
             setPasswordsMatch(false);
+            return;
+        }
+
+        if (!validatePassword(password)) {
+            setIsValidPassword(false);
             return;
         }
 
@@ -87,6 +93,10 @@ const Register = () => {
     const validateEmail = (email) => {
         return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
     };
+
+    const validatePassword = (password) => {
+        return /^(?=.*[A-Z])(?=.*\d).{8,}$/.test(password);
+    }
 
     return (
         <div>
@@ -173,13 +183,20 @@ const Register = () => {
                                 id="password"
                                 value={password}
                                 onChange={(e) => {
-                                    setPassword(e.target.value)
+                                    const { value } = e.target;
+                                    setPassword(value);
+                                    setIsValidPassword(validatePassword(value));
                                     setPasswordsMatch(true);
                                 }}
                                 placeholder="Enter your password"
                                 className="rInput"
                                 required
                             />
+                            {!isValidPassword &&
+                                <div
+                                    className="error-message">Please enter a valid password (minimum 8 characters with at least one uppercase and one number).
+                                </div>
+                            }
                         </div>
                         <div className="form-group">
                             <label htmlFor="confirmPassword">Confirm Password</label>

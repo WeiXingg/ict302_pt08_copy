@@ -2,6 +2,7 @@ label {
   font-weight: bold;
   display: block;
   margin-bottom: 8px;
+  max-width: 400px;
 }
 
 input[type="text"],
@@ -35,6 +36,7 @@ s
   display: flex;
   flex-direction: column;
   gap: 10px;
+  width: 420px;
 }
 
 .rInput {
@@ -76,6 +78,7 @@ s
 .error-message {
   color: #FF0000;
   font-size: 14px;
-  margin-top: 10px;
+  margin-top: 1px;
   text-align: center;
+  max-width: 400px;
 }

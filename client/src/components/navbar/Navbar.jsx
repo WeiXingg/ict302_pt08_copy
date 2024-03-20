@@ -90,7 +90,7 @@ const Navbar = ({ isLoginPage, isRegisterPage, isBookingPage, isUploadPage }) =>
               {countdownTime !== null && (<div className="timer">(Auto logout in: {formatTime(countdownTime / 1000)})</div>)}
             </div>
             <div className="rightSection">
-              {user.isAdmin && <button disabled={isUploadPage} className="navButton" onClick={handleUpload}>Upload</button>}
+              {user.isStaff && <button disabled={isUploadPage} className="navButton" onClick={handleUpload}>Upload</button>}
               <button disabled={isBookingPage} className="navButton" onClick={handleBooking}>Booking</button>
               <button className="navButton" onClick={handleLogout}>Logout</button>
             </div>

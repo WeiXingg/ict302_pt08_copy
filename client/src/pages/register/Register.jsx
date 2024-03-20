@@ -9,12 +9,14 @@ const Register = () => {
     const [username, setName] = useState("");
     const [email, setEmail] = useState("");
     const [studentid, setStudentId] = useState("");
+    const [staffid, setStaffId] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
     const [showAlert, setShowAlert] = useState(false);
     const [usertype, setUserType] = useState("student");
     const [isValidStudentId, setIsValidStudentId] = useState(true);
+    const [isValidStaffId, setIsValidStaffId] = useState(true);
     const [isValidEmail, setIsValidEmail] = useState(true);
     const [passwordsMatch, setPasswordsMatch] = useState(true);
     const [isValidPassword, setIsValidPassword] = useState(true);
@@ -26,6 +28,9 @@ const Register = () => {
         if (usertype !== "student") {
             setStudentId("");
             setIsValidStudentId(true);
+        } else if (usertype !== "staff") {
+            setStaffId("");
+            setIsValidStaffId(true);
         }
     }, [usertype]);
 
@@ -34,6 +39,11 @@ const Register = () => {
 
         if (usertype === "student" && !validateStudentId(studentid)) {
             setIsValidStudentId(false);
+            return;
+        }
+
+        if (usertype === "staff" && !validateStaffId(staffid)) {
+            setIsValidStaffId(false);
             return;
         }
 
@@ -56,8 +66,10 @@ const Register = () => {
             let requestBody;
             if (usertype === "student") {
                 requestBody = JSON.stringify({ usertype, username, email, studentid, password });
+            } else if (usertype === "staff") {
+                requestBody = JSON.stringify({ usertype, username, email, staffid, password });
             } else {
-                requestBody = JSON.stringify({ usertype, username, email, password });
+                return;
             }
             const response = await fetch(apiUrl + "/auth/register", {
                 method: "POST",
@@ -87,6 +99,10 @@ const Register = () => {
     };
 
     const validateStudentId = (id) => {
+        return /^\d{7}$/.test(id);
+    };
+
+    const validateStaffId = (id) => {
         return /^\d{7}$/.test(id);
     };
 
@@ -172,6 +188,30 @@ const Register = () => {
                                 {!isValidStudentId &&
                                     <div
                                         className="error-message">Please enter a valid student ID (7 digits).
+                                    </div>
+                                }
+                            </div>
+                        )}
+                        {usertype === "staff" && (
+                            <div className="form-group">
+                                <label htmlFor="staffid">Staff ID</label>
+                                <input
+                                    type="text"
+                                    id="staffid"
+                                    value={staffid}
+                                    onChange={(e) => {
+                                        const { value } = e.target;
+                                        setStaffId(value);
+                                        setIsValidStaffId(validateStaffId(value));
+                                        setErrorMessage("");
+                                    }}
+                                    placeholder="Enter your staff ID"
+                                    className="rInput"
+                                    required
+                                />
+                                {!isValidStaffId &&
+                                    <div
+                                        className="error-message">Please enter a valid staff ID (7 digits).
                                     </div>
                                 }
                             </div>

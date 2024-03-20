@@ -238,7 +238,7 @@ const Booking = () => {
             </div>
             {showLecturerAlert && (
                 <CustomAlert
-                    message="Please select a lecturer"
+                    message="Please select a lecturer."
                     onClose={() => handleCloseAlert("LecturerAlert")}
                 />
             )}

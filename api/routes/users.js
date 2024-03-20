@@ -1,6 +1,6 @@
-import express from "express"
-import { deleteUser, getAllUser, getUser, updateUser, addBookedDate } from "../controllers/user.js"
-import { verifyAdmin, verifyUser } from "../utils/verifyToken.js"
+const express = require("express");
+const { deleteUser, getAllUser, getUser, updateUser, addBookedDate } = require("../controllers/user.js");
+const { verifyAdmin, verifyUser } = require("../utils/verifyToken.js");
 
 const router = express.Router();
 
@@ -11,7 +11,6 @@ router.put("/:id", verifyUser, updateUser);
 router.delete("/:id", verifyUser, deleteUser);
 
 //GET
-// router.get("/:id", verifyUser, getUser);
 router.get("/:identifier", verifyUser, getUser);
 
 //GET ALL
@@ -20,4 +19,4 @@ router.get("/", verifyAdmin, getAllUser);
 // POST to add booked date
 router.post("/:username", verifyUser, addBookedDate);
 
-export default router
+module.exports = router;

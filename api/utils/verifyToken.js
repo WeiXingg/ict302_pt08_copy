@@ -1,6 +1,6 @@
-import jwt from "jsonwebtoken"
+const jwt = require("jsonwebtoken");
 
-export const verifyToken = async (req, res) => {
+const verifyToken = async (req, res) => {
     const token = req.body.access_token || req.query.access_token;
     if (!token) {
         res.status(401).send("You are not authenticated!");
@@ -12,19 +12,19 @@ export const verifyToken = async (req, res) => {
         req.user = decodedToken;
         return true;
     } catch (e) {
-        res.status(403).send("Token is not valid!")
+        res.status(403).send("Token is not valid!");
         return false;
     }
-}
+};
 
-export const verifyUser = (req, res, next) => {
+const verifyUser = (req, res, next) => {
     if (!verifyToken(req, res)) {
         return;
     }
     next();
-}
+};
 
-export const verifyAdmin = (req, res, next) => {
+const verifyAdmin = (req, res, next) => {
     if (!verifyToken(req, res)) {
         return;
     }
@@ -32,6 +32,8 @@ export const verifyAdmin = (req, res, next) => {
     if (req.user.isAdmin) {
         next();
     } else {
-        res.status(403).send("You are not authorised as admin!")
+        res.status(403).send("You are not authorised as admin!");
     }
-}
+};
+
+module.exports = { verifyToken, verifyUser, verifyAdmin };

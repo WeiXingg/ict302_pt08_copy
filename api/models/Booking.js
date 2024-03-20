@@ -1,4 +1,4 @@
-import mongoose from "mongoose"
+const mongoose = require("mongoose");
 
 const BookingSchema = new mongoose.Schema({
     lecturer: {
@@ -9,10 +9,14 @@ const BookingSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    studentid: {
+        type: Number,
+        required: true
+    },
     date: {
         type: Date,
         required: true
-    },
+    }
 });
 
-export default mongoose.model("Booking", BookingSchema)
+module.exports = mongoose.model("Booking", BookingSchema);

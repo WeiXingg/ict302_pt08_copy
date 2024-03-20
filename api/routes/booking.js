@@ -1,22 +1,22 @@
-import express from "express"
-import { createBooking, deleteBooking, getAllBooking, getBooking, updateBooking } from "../controllers/booking.js"
-import { verifyAdmin, verifyUser } from "../utils/verifyToken.js"
+const express = require("express");
+const { createBooking, deleteBooking, getAllBooking, getBooking, updateBooking } = require("../controllers/booking.js");
+const { verifyAdmin, verifyUser } = require("../utils/verifyToken.js");
 
 const router = express.Router();
 
-//CREATE
+// CREATE
 router.post("/", verifyUser, createBooking);
 
-//UPDATE
+// UPDATE
 router.put("/:id", verifyUser, updateBooking);
 
-//DELETE
+// DELETE
 router.delete("/:id", verifyUser, deleteBooking);
 
-//GET
+// GET
 router.get("/:id", verifyUser, getBooking);
 
-//GET ALL
+// GET ALL
 router.get("/", verifyAdmin, getAllBooking);
 
-export default router
+module.exports = router;

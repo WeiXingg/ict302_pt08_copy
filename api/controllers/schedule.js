@@ -1,10 +1,9 @@
-import User from "../models/User.js"
-import Booking from "../models/Booking.js"
+const User = require("../models/User.js");
+const Booking = require("../models/Booking.js");
 
-export const retrieveLecturers = async (req, res) => {
+const retrieveLecturers = async (req, res) => {
     try {
         const users = await User.find({ usertype: "staff" }, "username isAdmin");
-        // If no staff users are found, send an empty response
         if (!users || users.length === 0) {
             return res.status(200).json({ usernames: [] });
         }
@@ -14,42 +13,43 @@ export const retrieveLecturers = async (req, res) => {
         }));
         return res.status(200).json({ lecturers });
     } catch (err) {
-        console.error("Error retrieving lecturers.");
+        console.error("Error retrieving lecturers.", err);
+        res.status(500).json({ message: "Internal server error" });
     }
-}
+};
 
-export const retrieveBookings = async (req, res) => {
+const retrieveBookings = async (req, res) => {
     try {
-        const bookings = await Booking.find({ $or: [{ student: req.query.username }, { lecturer: req.query.username }] });
+        const bookings = await Booking.find({ $or: [{ studentid: req.query.studentid }, { lecturer: req.query.username }] });
         return res.status(200).json({ bookings });
     } catch (err) {
-        console.error("Error retrieving bookings.");
+        console.error("Error retrieving bookings.", err);
+        res.status(500).json({ message: "Internal server error" });
     }
-}
+};
 
-export const deleteBookedDate = async (req, res) => {
+const deleteBookedDate = async (req, res) => {
     try {
         const { username, date } = req.params;
-        // Delete from user's booked dates
         const user = await User.findOne({ username });
         if (!user) {
             return res.status(404).json({ message: "User not found" });
         }
-        const index = user.booked.findIndex(
-            (bookedDate) => new Date(bookedDate).toISOString() === new Date(date).toISOString()
-        );
+        const index = user.booked.findIndex(bookedDate => new Date(bookedDate).toISOString() === new Date(date).toISOString());
         if (index === -1) {
             return res.status(400).json({ message: "Booked date not found" });
         }
         user.booked.splice(index, 1);
         await user.save();
-        // Delete from booking table
         const booking = await Booking.findOneAndDelete({ lecturer: username, date });
         if (!booking) {
             return res.status(404).json({ message: "Booking not found" });
         }
         res.status(200).json({ user, booking });
     } catch (err) {
-        console.error("Error deleting booked date.");
+        console.error("Error deleting booked date.", err);
+        res.status(500).json({ message: "Internal server error" });
     }
 };
+
+module.exports = { retrieveLecturers, retrieveBookings, deleteBookedDate };

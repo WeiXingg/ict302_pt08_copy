@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+const mongoose = require("mongoose");
 
 const { Schema } = mongoose;
 
@@ -10,7 +10,10 @@ const UserSchema = new Schema({
     username: {
         type: String,
         required: true,
-        unique: true
+        index: {
+            unique: true,
+            collation: { locale: 'en', strength: 2 }
+        }
     },
     email: {
         type: String,
@@ -24,6 +27,17 @@ const UserSchema = new Schema({
     isAdmin: {
         type: Boolean,
         default: false
+    },
+    isStaff: {
+        type: Boolean,
+        default: false
+    },
+    staffid: {
+        type: Number,
+        unique: true,
+        required: function () {
+            return this.usertype === "staff";
+        }
     },
     studentid: {
         type: Number,
@@ -40,4 +54,4 @@ const UserSchema = new Schema({
     }
 }, { timestamps: true });
 
-export default mongoose.model("User", UserSchema);
+module.exports = mongoose.model("User", UserSchema);

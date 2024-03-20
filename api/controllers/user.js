@@ -1,7 +1,7 @@
-import mongoose from "mongoose"
-import User from "../models/User.js"
+const mongoose = require("mongoose");
+const User = require("../models/User.js");
 
-export const updateUser = async (req, res) => {
+const updateUser = async (req, res) => {
     try {
         const updatedUser = await User.findByIdAndUpdate(
             req.params.id,
@@ -13,9 +13,9 @@ export const updateUser = async (req, res) => {
         console.error("Error updating user.");
         return res.status(500).json({ message: "Internal server error" });
     }
-}
+};
 
-export const deleteUser = async (req, res) => {
+const deleteUser = async (req, res) => {
     try {
         await User.findByIdAndDelete(req.params.id);
         res.status(200).json("User has been deleted.");
@@ -23,17 +23,15 @@ export const deleteUser = async (req, res) => {
         console.error("Error deleting user.");
         return res.status(500).json({ message: "Internal server error" });
     }
-}
+};
 
-export const getUser = async (req, res) => {
+const getUser = async (req, res) => {
     try {
         const identifier = req.params.identifier;
         let retrieveUser;
         if (mongoose.Types.ObjectId.isValid(identifier)) {
-            // If the identifier is a valid MongoDB ObjectID, search by _id
             retrieveUser = await User.findById(identifier);
         } else {
-            // Otherwise, search by username
             retrieveUser = await User.findOne({ username: identifier });
         }
         if (!retrieveUser) {
@@ -44,9 +42,9 @@ export const getUser = async (req, res) => {
         console.error("Error getting user.");
         return res.status(500).json({ message: "Internal server error" });
     }
-}
+};
 
-export const getAllUser = async (req, res) => {
+const getAllUser = async (req, res) => {
     try {
         const retrieveAllUser = await User.find();
         res.status(200).json(retrieveAllUser);
@@ -54,15 +52,14 @@ export const getAllUser = async (req, res) => {
         console.error("Error getting users.");
         return res.status(500).json({ message: "Internal server error" });
     }
-}
+};
 
-export const addBookedDate = async (req, res) => {
+const addBookedDate = async (req, res) => {
     try {
         const user = await User.findOne({ username: req.params.username });
         if (!user) {
             return res.status(404).json({ message: "User not found" });
         }
-        // Check if the booked date already exists
         const isBooked = user.booked.some(date => new Date(date).toISOString() === new Date(req.body.booked).toISOString());
         if (isBooked) {
             return res.status(400).json({ message: "Booked date already exists" });
@@ -74,4 +71,6 @@ export const addBookedDate = async (req, res) => {
         console.error("Error adding booked date.");
         return res.status(500).json({ message: "Internal server error" });
     }
-}
+};
+
+module.exports = { updateUser, deleteUser, getUser, getAllUser, addBookedDate };

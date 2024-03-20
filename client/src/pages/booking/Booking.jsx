@@ -191,7 +191,7 @@ const Booking = () => {
             <div className="container">
                 {!isScheduled && (
                     <div>
-                        <h2 className="bookingTitle">Book an appointment</h2>
+                        <h2 className="bookingTitle">Book An Appointment</h2>
                         <div className="selection">
                             <label htmlFor="lecturerSelect">Select Lecturer:</label>
                             <select

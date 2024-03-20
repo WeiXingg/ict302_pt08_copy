@@ -1,5 +1,4 @@
 import "./home.css"
-import muLogo from "../home/mulogo.png"
 import { Link } from 'react-router-dom'
 import Header from "../../components/header/Header"
 import Navbar from "../../components/navbar/Navbar"
@@ -22,7 +21,6 @@ const Home = () => {
       <Navbar />
       <Header />
       <div className="homeContainer">
-        <img src={muLogo} alt="Murdoch University" className="muLogo" />
         <h1 className="homeTitle">Welcome to AppointMate!</h1>
         <p className="homeDescription">
           If you're new here, <Link to="/register">Sign up</Link> for an account to get started.

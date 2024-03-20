@@ -166,7 +166,7 @@ const Dashboard = () => {
     <div>
       <Navbar />
       <Header />
-      <h1 className="dashboardHeader">View your appointments here!</h1>
+      <h1 className="dashboardHeader">View Your Appointments Here!</h1>
       <div className="calendar">
         <div className="calendar-header">
           <button onClick={prevMonth}>&lt;</button>

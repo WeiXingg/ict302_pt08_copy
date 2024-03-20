@@ -1,5 +1,5 @@
 .homeContainer {
-  margin-top: 20px;
+  margin-top: 60px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -18,8 +18,4 @@
   text-align: center;
   max-width: 800px;
   margin-top: 20px;
-}
-
-.muLogo {
-  width: 200px;
 }

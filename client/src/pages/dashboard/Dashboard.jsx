@@ -24,12 +24,12 @@ const Dashboard = () => {
         if (!user) {
           return;
         }
-        const userType = user.usertype;
+        const userType = user?.usertype;
         let parameterName;
         if (userType === "student") {
-          parameterName = "staffid";
-        } else if (userType === "staff") {
           parameterName = "studentid";
+        } else if (userType === "staff") {
+          parameterName = "username";
         } else {
           return;
         }

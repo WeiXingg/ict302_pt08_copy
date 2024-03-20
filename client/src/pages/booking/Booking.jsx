@@ -119,7 +119,9 @@ const Booking = () => {
                 body: JSON.stringify({
                     access_token: user?.access_token || "",
                     lecturer: selectedLecturer,
-                    student: user.username, date: date
+                    student: user.username,
+                    studentid: user.studentid,
+                    date: date
                 }),
             });
 

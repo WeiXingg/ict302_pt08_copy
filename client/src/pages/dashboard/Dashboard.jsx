@@ -159,6 +159,8 @@ const Dashboard = () => {
                   <>
                     Student: {booking.student}
                     <br />
+                    Student ID: {booking.studentid}
+                    <br />
                     Time: {new Date(booking.date).toLocaleTimeString()}
                   </>
                 )}

@@ -62,12 +62,14 @@ const Register = () => {
             return;
         }
 
+        const lowercaseEmail = email.toLowerCase();
+
         try {
             let requestBody;
             if (usertype === "student") {
-                requestBody = JSON.stringify({ usertype, username, email, studentid, password });
+                requestBody = JSON.stringify({ usertype, username, email: lowercaseEmail, studentid, password });
             } else if (usertype === "staff") {
-                requestBody = JSON.stringify({ usertype, username, email, staffid, password });
+                requestBody = JSON.stringify({ usertype, username, email: lowercaseEmail, staffid, password });
             } else {
                 return;
             }
@@ -135,7 +137,7 @@ const Register = () => {
                             </select>
                         </div>
                         <div className="form-group">
-                            <label htmlFor="name">Name</label>
+                            <label htmlFor="name">Username</label>
                             <input
                                 type="text"
                                 id="name"

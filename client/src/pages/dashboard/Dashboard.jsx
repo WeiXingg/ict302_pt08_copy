@@ -24,8 +24,17 @@ const Dashboard = () => {
         if (!user) {
           return;
         }
+        const userType = user.usertype;
+        let parameterName;
+        if (userType === "student") {
+          parameterName = "staffid";
+        } else if (userType === "staff") {
+          parameterName = "studentid";
+        } else {
+          return;
+        }
         const response = await fetch(apiUrl + `/schedule/retrievebookings?` +
-          `username=${encodeURIComponent(user?.username)}&` +
+          `${parameterName}=${encodeURIComponent(user?.[parameterName])}&` +
           `access_token=${encodeURIComponent(user?.access_token)}`, {
           method: "GET",
           headers: {

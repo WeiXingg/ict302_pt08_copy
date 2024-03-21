@@ -29,6 +29,9 @@ const Booking = () => {
                 if (!user) {
                     return;
                 }
+                if (user.isStaff) {
+                    navigate("/dashboard");
+                }
                 const lecturerResponse = await fetch(apiUrl + `/schedule/retrievelecturers?` +
                     `access_token=${encodeURIComponent(user?.access_token)}`, {
                     method: "GET",
@@ -70,7 +73,7 @@ const Booking = () => {
         };
 
         fetchData();
-    }, [user?.access_token, user, selectedLecturer]);
+    }, [user?.access_token, user, navigate, selectedLecturer, apiUrl]);
 
     const handleScheduled = async (date) => {
         setIsScheduling(true);

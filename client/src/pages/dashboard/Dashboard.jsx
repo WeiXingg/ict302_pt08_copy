@@ -52,7 +52,7 @@ const Dashboard = () => {
     };
 
     fetchBookings();
-  }, [user]);
+  }, [user, apiUrl]);
 
   const nextMonth = () => {
     setCurrentDate(new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 1));

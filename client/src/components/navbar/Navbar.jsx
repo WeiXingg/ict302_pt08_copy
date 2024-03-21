@@ -91,7 +91,7 @@ const Navbar = ({ isLoginPage, isRegisterPage, isBookingPage, isUploadPage }) =>
             </div>
             <div className="rightSection">
               {user.isStaff && <button disabled={isUploadPage} className="navButton" onClick={handleUpload}>Upload</button>}
-              <button disabled={isBookingPage} className="navButton" onClick={handleBooking}>Booking</button>
+              {!user.isStaff && <button disabled={isBookingPage} className="navButton" onClick={handleBooking}>Booking</button>}
               <button className="navButton" onClick={handleLogout}>Logout</button>
             </div>
           </>

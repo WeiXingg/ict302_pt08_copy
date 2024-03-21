@@ -7,6 +7,7 @@ import { AuthContext } from "../../context/AuthContext"
 import CustomAlert from "../../components/alert/Alert"
 import CheckToken from "../../hooks/CheckToken"
 import emailjs from "emailjs-com"
+import { useNavigate } from "react-router-dom"
 
 const Upload = () => {
     const [csvFile, setCsvFile] = useState(null);
@@ -14,10 +15,18 @@ const Upload = () => {
     const { user, dispatch } = useContext(AuthContext);
     const { showLogoutAlert, handleLogout } = CheckToken(user, dispatch);
     const [inputKey, setInputKey] = useState(0);
+    const navigate = useNavigate()
 
     useEffect(() => {
+        if (!user) {
+            return;
+        }
+        if (!user.isStaff)
+        {
+            navigate("/dashboard");
+        }
         setInputKey(prevKey => prevKey + 1);
-    }, [csvFile]);
+    }, [user, navigate, csvFile]);
 
     const handleFileUpload = (event) => {
         const file = event.target.files[0];
@@ -43,6 +52,10 @@ const Upload = () => {
     };
 
     const handleUploadButtonClick = () => {
+        if (!user.isStaff) {
+            console.error("You are not authorised!");
+            return;
+        }
         if (csvFile) {
             const fileName = csvFile.name;
             const csvRegex = /^[^.]+\.(csv)$/i;

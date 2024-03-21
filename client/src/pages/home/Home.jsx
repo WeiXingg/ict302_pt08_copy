@@ -1,5 +1,5 @@
 import "./home.css"
-import { Link } from 'react-router-dom'
+import { Link } from "react-router-dom"
 import Header from "../../components/header/Header"
 import Navbar from "../../components/navbar/Navbar"
 import { AuthContext } from "../../context/AuthContext"

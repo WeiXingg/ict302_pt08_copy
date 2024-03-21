@@ -1,22 +1,12 @@
 .centered-container {
   align-items: center;
   text-align: center;
+  justify-content: center;
   margin-top: 20px;
 }
 
 .booking-content h2 {
-  margin-bottom: 10px;
-}
-
-.booking-content input[type="file"] {
-  margin-top: 20px;
-  margin-bottom: 10px;
-}
-
-.booking-content input[type="file"]::-webkit-file-upload-button {
-  padding: 2px 4px;
-  border-radius: 5px;
-  cursor: pointer;
+  font-size: 28px;
 }
 
 .uploadButton {
@@ -32,4 +22,12 @@
 
 .uploadButton:hover {
   background-color: #B51D38;
+}
+
+.browseButton {
+  margin-top: 20px;
+}
+
+.downloadTemplate {
+  margin-top: 20px;
 }

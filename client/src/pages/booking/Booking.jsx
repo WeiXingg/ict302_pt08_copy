@@ -7,6 +7,7 @@ import { AuthContext } from "../../context/AuthContext"
 import DayTimePicker from "@mooncake-dev/react-day-time-picker"
 import CustomAlert from "../../components/alert/Alert"
 import CheckToken from "../../hooks/CheckToken"
+import ical from "ical-generator"
 
 const Booking = () => {
     const apiUrl = process.env.REACT_APP_API;
@@ -23,7 +24,6 @@ const Booking = () => {
     const { showLogoutAlert, handleLogout } = CheckToken(user, dispatch);
 
     useEffect(() => {
-        const apiUrl = process.env.REACT_APP_API;
         const fetchData = async () => {
             try {
                 if (!user) {
@@ -135,6 +135,37 @@ const Booking = () => {
                     body: JSON.stringify({ booked: date }),
                 });
                 if (updateBooked.ok) {
+
+                    const cal = ical({
+                        domain: "https://ict302-pt08.vercel.app/",
+                        name: "Appointment",
+                    });
+
+                    cal.createEvent({
+                        start: date,
+                        end: new Date(date.getTime() + 30 * 60 * 1000),
+                        summary: "Appointment with Lecturer/Student",
+                        description: "Please RSVP",
+                        location: "Microsoft Teams",
+                        organizer: {
+                            name: selectedLecturer,
+                            email: "no-email@example.com"
+                        },
+                        attendees: [
+                            {
+                                name: user.username,
+                                email: user.email,
+                            },
+                        ],
+                    });
+
+                    // Convert iCalendar object to string
+                    const calendarString = cal.toString();
+
+                    // Download the iCalendar file
+                    downloadICS(calendarString, "booking_event.ics");
+
+
                     setIsScheduled(true);
                 } else {
                     console.error("Failed to update user.");
@@ -146,6 +177,18 @@ const Booking = () => {
             console.error("Error.", error.message);
         }
         setIsScheduling(false);
+    };
+
+    const downloadICS = (calendarString, filename) => {
+        const blob = new Blob([calendarString], { type: "text/calendar" });
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        window.URL.revokeObjectURL(url);
     };
 
     const timeSlotValidator = (slotTime) => {

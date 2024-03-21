@@ -1,20 +1,29 @@
 import "./upload.css"
+import templateCSV from "../upload/template.csv"
 import Navbar from "../../components/navbar/Navbar"
 import Header from "../../components/header/Header"
-import { useContext, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import { AuthContext } from "../../context/AuthContext"
 import CustomAlert from "../../components/alert/Alert"
 import CheckToken from "../../hooks/CheckToken"
+import emailjs from "emailjs-com"
 
 const Upload = () => {
     const [csvFile, setCsvFile] = useState(null);
+    const [fileName, setFileName] = useState("");
     const { user, dispatch } = useContext(AuthContext);
     const { showLogoutAlert, handleLogout } = CheckToken(user, dispatch);
+    const [inputKey, setInputKey] = useState(0);
+
+    useEffect(() => {
+        setInputKey(prevKey => prevKey + 1);
+    }, [csvFile]);
 
     const handleFileUpload = (event) => {
         const file = event.target.files[0];
         if (file) {
             setCsvFile(file);
+            setFileName(file.name);
         }
     };
 
@@ -23,7 +32,7 @@ const Upload = () => {
         let rowNumber = 1;
 
         rows.forEach(row => {
-            const [name, email] = row.split(",");
+            const [name, email] = row.split(",").slice(0, 2);
             if (name && email) {
                 sendEmail(name, email);
             } else {
@@ -42,8 +51,9 @@ const Upload = () => {
 
                 reader.onload = () => {
                     const csvData = reader.result;
-                    console.log("Uploaded CSV file:", csvData);
                     individualEmail(csvData);
+                    setCsvFile(null);
+                    setFileName("");
                 };
 
                 reader.readAsText(csvFile);
@@ -55,10 +65,22 @@ const Upload = () => {
         }
     };
 
-
-    const sendEmail = (name, email) => {
-        // email logic
-        console.log(`Sending email to ${name} at ${email}`);
+    const sendEmail = (to_name, to_email) => {
+        emailjs.send(
+            process.env.REACT_APP_SERVICE_ID,
+            process.env.REACT_APP_TEMPLATE_ID,
+            {
+                to_name,
+                to_email,
+            },
+            process.env.REACT_APP_PUBLIC_KEY
+        )
+            .then((response) => {
+                console.log("Email sent successfully!", response.status, response.text);
+            })
+            .catch((error) => {
+                console.error("Email sending failed:", error);
+            });
     };
 
     return (
@@ -68,7 +90,24 @@ const Upload = () => {
             <div className="centered-container">
                 <div className="booking-content">
                     <h2>Upload CSV File</h2>
-                    <input type="file" accept=".csv" onChange={handleFileUpload} />
+                    <div>
+                        <input
+                            key={inputKey}
+                            type="file"
+                            accept=".csv"
+                            onChange={handleFileUpload}
+                            style={{ display: "none" }}
+                            ref={(fileInput) => fileInput && (fileInput.value = null)}
+                        />
+                        <button className="browseButton"
+                            onClick={() => document.querySelector('input[type="file"]').click()}>
+                            Browse
+                        </button>
+                        <span> {fileName}</span>
+                    </div>
+                    <p className="downloadTemplate">
+                        Download template: <a href={templateCSV} download>template.csv</a>
+                    </p>
                 </div>
                 <button className="uploadButton" onClick={handleUploadButtonClick}>Upload</button>
             </div>

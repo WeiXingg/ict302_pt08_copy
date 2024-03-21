@@ -9,7 +9,7 @@ const register = async (req, res) => {
         
         let existingUser;
 
-        existingUser = await User.findOne({ username: { $regex: new RegExp('^' + req.body.username + '$', 'i') } });
+        existingUser = await User.findOne({ username: { $regex: new RegExp("^" + req.body.username + "$", "i") } });
         if (existingUser) {
             return res.status(400).json({ error: "User with the same username already exists!" });
         }
@@ -65,7 +65,7 @@ const register = async (req, res) => {
 const login = async (req, res) => {
     try {
         // const user = await User.findOne({ username: req.body.username });
-        const user = await User.findOne({ username: { $regex: new RegExp('^' + req.body.username + '$', 'i') } });
+        const user = await User.findOne({ username: { $regex: new RegExp("^" + req.body.username + "$", "i") } });
         if (!user) return res.status(404).json({ error: "User not found!" });
 
         const isPasswordCorrect = await bcrypt.compare(req.body.password, user.password);

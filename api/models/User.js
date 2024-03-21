@@ -12,7 +12,7 @@ const UserSchema = new Schema({
         required: true,
         index: {
             unique: true,
-            collation: { locale: 'en', strength: 2 }
+            collation: { locale: "en", strength: 2 }
         }
     },
     email: {

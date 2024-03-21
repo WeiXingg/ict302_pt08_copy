@@ -109,7 +109,7 @@ const Dashboard = () => {
     const daysInMonth = getDaysInMonth(currentDate);
     const firstDayOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1).getDay();
     const calendar = [];
-    const weekdays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    const weekdays = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 
     // Add day labels
     for (let i = 0; i < 7; i++) {
@@ -146,10 +146,10 @@ const Dashboard = () => {
             {bookingsForDay.map((booking, index) => (
               <li
                 key={index}
-                className={`bookingDetails ${selectedBooking === booking ? 'selected' : ''}`}
+                className={`bookingDetails ${selectedBooking === booking ? "selected" : ""}`}
                 onClick={() => handleBookingClick(booking)}
               >
-                {user.usertype === 'student' ? (
+                {user.usertype === "student" ? (
                   <>
                     Lecturer: {booking.lecturer}
                     <br />

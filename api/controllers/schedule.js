@@ -3,12 +3,13 @@ const Booking = require("../models/Booking.js");
 
 const retrieveLecturers = async (req, res) => {
     try {
-        const users = await User.find({ usertype: "staff" }, "username isAdmin");
+        const users = await User.find({ usertype: "staff" }, "username email isAdmin");
         if (!users || users.length === 0) {
             return res.status(200).json({ usernames: [] });
         }
         const lecturers = users.map(user => ({
             username: user.username,
+            email: user.email,
             isAdmin: user.isAdmin
         }));
         return res.status(200).json({ lecturers });

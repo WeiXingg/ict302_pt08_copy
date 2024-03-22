@@ -31,7 +31,8 @@ const retrieveBookings = async (req, res) => {
 
 const retrieveEmail = async (req, res) => {
     try {
-        const user = await User.findOne({ username: req.query.username });
+        const { username } = req.params;
+        const user = await User.findOne({ username });
         return res.status(200).json({ email: user.email });
     } catch (err) {
         console.error("Error retrieving email.", err);

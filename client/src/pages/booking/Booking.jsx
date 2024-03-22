@@ -168,8 +168,16 @@ const Booking = () => {
 
                     const calendarString = cal.toString();
 
-                    sendEmail(selectedLecturer, lecturerEmail, user.username, date.toLocaleString(), calendarString, process.env.REACT_APP_LECTURER_BOOKING_TEMPLATE_ID);
-                    sendEmail(user.username, user.email, selectedLecturer, date.toLocaleString(), calendarString, process.env.REACT_APP_STUDENT_BOOKING_TEMPLATE_ID);
+                    sendEmail(selectedLecturer, lecturerEmail, user.username, date.toLocaleString(), calendarString, process.env.REACT_APP_LECTURER_BOOKING_TEMPLATE_ID)
+                        .then(() => {
+                            // Send email to student
+                            sendEmail(user.username, user.email, selectedLecturer, date.toLocaleString(), calendarString, process.env.REACT_APP_STUDENT_BOOKING_TEMPLATE_ID)
+                                .then(() => {
+                                    setIsScheduled(true);
+                                });
+                        });
+                    // sendEmail(selectedLecturer, lecturerEmail, user.username, date.toLocaleString(), calendarString, process.env.REACT_APP_LECTURER_BOOKING_TEMPLATE_ID);
+                    // sendEmail(user.username, user.email, selectedLecturer, date.toLocaleString(), calendarString, process.env.REACT_APP_STUDENT_BOOKING_TEMPLATE_ID);
 
                     setIsScheduled(true);
                 } else {
@@ -184,33 +192,41 @@ const Booking = () => {
         setIsScheduling(false);
     };
 
-    const sendEmail = (to_name, to_email, with_name, date, calendarString, templateId) => {
-        const blob = new Blob([calendarString], { type: "text/calendar" });
-        const reader = new FileReader();
-        reader.readAsDataURL(blob);
+    const sendEmail = async (to_name, to_email, with_name, date, calendarString, templateId) => {
+        try {
+            const blob = new Blob([calendarString], { type: "text/calendar" });
+            const reader = new FileReader();
+            reader.readAsDataURL(blob);
 
-        reader.onload = () => {
-            const attachmentBase64 = reader.result.split(",")[1];
+            return new Promise((resolve, reject) => {
+                reader.onload = () => {
+                    const attachmentBase64 = reader.result.split(",")[1];
 
-            emailjs.send(
-                process.env.REACT_APP_SERVICE_ID,
-                templateId,
-                {
-                    to_name,
-                    to_email,
-                    with_name,
-                    date,
-                    attachment: attachmentBase64,
-                },
-                process.env.REACT_APP_PUBLIC_KEY
-            )
-                .then((response) => {
-                    console.log("Email sent successfully!", response.status, response.text);
-                })
-                .catch((error) => {
-                    console.error("Email sending failed:", error);
-                });
-        };
+                    emailjs.send(
+                        process.env.REACT_APP_SERVICE_ID,
+                        templateId,
+                        {
+                            to_name,
+                            to_email,
+                            with_name,
+                            date,
+                            attachment: attachmentBase64,
+                        },
+                        process.env.REACT_APP_PUBLIC_KEY
+                    )
+                        .then((response) => {
+                            console.log("Email sent successfully!", response.status, response.text);
+                            resolve();
+                        })
+                        .catch((error) => {
+                            console.error("Email sending failed:", error);
+                            reject(error);
+                        });
+                };
+            });
+        } catch (error) {
+            console.error("Error.", error);
+        }
     };
 
     const timeSlotValidator = (slotTime) => {

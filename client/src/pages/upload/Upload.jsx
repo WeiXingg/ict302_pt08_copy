@@ -58,7 +58,8 @@ const Upload = () => {
         }
         if (csvFile) {
             const fileName = csvFile.name;
-            const csvRegex = /^[^.]+\.(csv)$/i;
+            const csvRegex = /^(?=.*\.csv$).+/i;
+            
             if (csvRegex.test(fileName)) {
                 const reader = new FileReader();
 

@@ -16,13 +16,14 @@ const Upload = () => {
     const { showLogoutAlert, handleLogout } = CheckToken(user, dispatch);
     const [inputKey, setInputKey] = useState(0);
     const navigate = useNavigate()
+    const [showUploadSuccessfulAlert, setShowUploadSuccessfulAlert] = useState(false);
+    const [showUploadFailAlert, setShowUploadFailAlert] = useState(false);
 
     useEffect(() => {
         if (!user) {
             return;
         }
-        if (!user.isStaff)
-        {
+        if (!user.isStaff) {
             navigate("/dashboard");
         }
         setInputKey(prevKey => prevKey + 1);
@@ -36,19 +37,44 @@ const Upload = () => {
         }
     };
 
-    const individualEmail = (csvData) => {
+    const individualEmail = async (csvData) => {
         const rows = csvData.split("\n").slice(1); // Skip first row
         let rowNumber = 1;
+        let successCount = 0;
 
-        rows.forEach(row => {
-            const [name, email] = row.split(",").slice(0, 2);
-            if (name && email) {
-                sendEmail(name, email);
+        if (rows.length === 0) {
+            console.error("No data found in the CSV file.");
+            setShowUploadFailAlert(true);
+            return;
+        }
+
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        for (const row of rows) {
+            const [name, email, lecturer, module] = row.split(",").slice(0, 4);
+            if (!email) {
+                console.error("Skipping row " + rowNumber + " due to invalid email, incomplete or empty data.");
+                rowNumber++;
+                continue;
+            }
+            const trimmedEmail = email.trim();
+            if (name && email && emailRegex.test(trimmedEmail)) {
+                try {
+                    await sendEmail(name, trimmedEmail, lecturer, module);
+                    successCount++;
+                } catch (error) {
+                    console.error("Failed to send email for row " + rowNumber + ":", error);
+                }
             } else {
-                console.error("Skipping row " + rowNumber + " due to incomplete or empty data.");
+                console.error("Skipping row " + rowNumber + " due to invalid email, incomplete or empty data.");
             }
             rowNumber++;
-        });
+        }
+        if (successCount > 0) {
+            setShowUploadSuccessfulAlert(true);
+        } else {
+            setShowUploadFailAlert(true);
+        }
     };
 
     const handleUploadButtonClick = () => {
@@ -59,7 +85,7 @@ const Upload = () => {
         if (csvFile) {
             const fileName = csvFile.name;
             const csvRegex = /^(?=.*\.csv$).+/i;
-            
+
             if (csvRegex.test(fileName)) {
                 const reader = new FileReader();
 
@@ -79,22 +105,34 @@ const Upload = () => {
         }
     };
 
-    const sendEmail = (to_name, to_email) => {
-        emailjs.send(
-            process.env.REACT_APP_SERVICE_ID,
-            process.env.REACT_APP_UPLOAD_TEMPLATE_ID,
-            {
-                to_name,
-                to_email,
-            },
-            process.env.REACT_APP_PUBLIC_KEY
-        )
+    const sendEmail = async (to_name, to_email, lecturer_name, module_code) => {
+        return emailjs
+            .send(
+                process.env.REACT_APP_SERVICE_ID,
+                process.env.REACT_APP_UPLOAD_TEMPLATE_ID,
+                {
+                    to_name,
+                    to_email,
+                    lecturer_name,
+                    module_code,
+                },
+                process.env.REACT_APP_PUBLIC_KEY
+            )
             .then((response) => {
                 console.log("Email sent successfully!", response.status, response.text);
             })
             .catch((error) => {
                 console.error("Email sending failed:", error);
+                throw error;
             });
+    };
+
+    const handleCloseAlert = (alertType) => {
+        if (alertType === "uploadSuccessAlert") {
+            setShowUploadSuccessfulAlert(false);
+        } else if (alertType === "uploadFailAlert") {
+            setShowUploadFailAlert(false);
+        }
     };
 
     return (
@@ -125,6 +163,18 @@ const Upload = () => {
                 </div>
                 <button className="uploadButton" onClick={handleUploadButtonClick}>Upload</button>
             </div>
+            {showUploadSuccessfulAlert && (
+                <CustomAlert
+                    message="Upload successful."
+                    onClose={() => handleCloseAlert("uploadSuccessAlert")}
+                />
+            )}
+            {showUploadFailAlert && (
+                <CustomAlert
+                    message="Upload failed due to empty file or invalid data."
+                    onClose={() => handleCloseAlert("uploadFailAlert")}
+                />
+            )}
             {showLogoutAlert && (
                 <CustomAlert
                     message="Your session has expired, please relogin."

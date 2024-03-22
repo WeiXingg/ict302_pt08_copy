@@ -273,13 +273,13 @@ const Booking = () => {
                     <div>
                         <h2 className="bookingTitle">Book An Appointment</h2>
                         <div className="selection">
-                            <label htmlFor="lecturerSelect">Select Lecturer:</label>
-                            <select
+                            <h3 className="lecturerSelect">Select a Lecturer</h3>
+                            <select className="selectionText"
                                 id="lecturerSelect"
                                 value={selectedLecturer}
                                 onChange={(e) => setSelectedLecturer(e.target.value)}
                             >
-                                {!selectedLecturer && <option value="">Select a lecturer</option>}
+                                {!selectedLecturer && <option value="">Not Selected</option>}
                                 {lecturer.map((lecturer, index) => (
                                     <option
                                         key={index}

@@ -6,6 +6,7 @@ import Navbar from "../../components/navbar/Navbar";
 import CustomAlert from "../../components/alert/Alert"
 import ConfirmAlert from "../../components/alert/Confirmalert"
 import CheckToken from "../../hooks/CheckToken"
+import emailjs from "emailjs-com"
 
 const Dashboard = () => {
   const apiUrl = process.env.REACT_APP_API;
@@ -15,6 +16,7 @@ const Dashboard = () => {
   const [selectedBooking, setSelectedBooking] = useState(null);
   const [showNoBookingAlert, setShowNoBookingAlert] = useState(false);
   const [showDeleteAlert, setShowDeleteAlert] = useState(false);
+  const [showDeletingAlert, setShowDeletingAlert] = useState(false);
   const [showBookingDeletedMessage, setShowBookingDeletedMessage] = useState(false);
   const { showLogoutAlert, handleLogout } = CheckToken(user, dispatch);
 
@@ -85,7 +87,29 @@ const Dashboard = () => {
   };
 
   const handleBookingDeletion = async () => {
+    setShowDeleteAlert(false);
+    setShowDeletingAlert(true);
     try {
+      const lecturerEmailResponse = await fetch(apiUrl + `/schedule/${selectedBooking.lecturer}?` +
+        `access_token=${encodeURIComponent(user?.access_token)}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const lecturerEmailData = await lecturerEmailResponse.json();
+      const lecturerEmail = lecturerEmailData.email;
+
+      const studentEmailResponse = await fetch(apiUrl + `/schedule/${selectedBooking.student}?` +
+        `access_token=${encodeURIComponent(user?.access_token)}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const studentEmailData = await studentEmailResponse.json();
+      const studentEmail = studentEmailData.email;
+
       const response = await fetch(apiUrl + `/schedule/${selectedBooking.lecturer}/${encodeURIComponent(selectedBooking.date)}?` +
         `access_token=${encodeURIComponent(user?.access_token)}`, {
         method: "DELETE",
@@ -94,14 +118,49 @@ const Dashboard = () => {
         },
       });
       if (response.ok) {
-        setShowDeleteAlert(false);
-        setShowBookingDeletedMessage(true);
-        setBookings(prevBookings => prevBookings.filter(prevBooking => prevBooking !== selectedBooking));
+        const formattedDate = new Date(selectedBooking.date)
+        sendEmail(selectedBooking.lecturer, lecturerEmail, selectedBooking.student, formattedDate.toLocaleDateString())
+          .then(() => {
+            sendEmail(selectedBooking.student, studentEmail, selectedBooking.lecturer, formattedDate.toLocaleDateString())
+              .then(() => {
+                setShowDeletingAlert(false);
+                setShowBookingDeletedMessage(true);
+                setBookings(prevBookings => prevBookings.filter(prevBooking => prevBooking !== selectedBooking));
+              });
+          });
       } else {
         console.error("Failed to delete booking.");
       }
     } catch (error) {
       console.error("Error deleting booking.");
+    }
+  };
+
+  const sendEmail = async (to_name, to_email, with_name, date) => {
+    try {
+      return new Promise((resolve, reject) => {
+        emailjs.send(
+          process.env.REACT_APP_SERVICE_ID,
+          process.env.REACT_APP_CANCEL_BOOKING_TEMPLATE_ID,
+          {
+            to_name,
+            to_email,
+            with_name,
+            date,
+          },
+          process.env.REACT_APP_PUBLIC_KEY
+        )
+          .then((response) => {
+            console.log("Email sent successfully!", response.status, response.text);
+            resolve();
+          })
+          .catch((error) => {
+            console.error("Email sending failed:", error);
+            reject(error);
+          });
+      });
+    } catch (error) {
+      console.error("Error.", error);
     }
   };
 
@@ -202,6 +261,14 @@ const Dashboard = () => {
           onClose={() => setShowDeleteAlert(false)}
           onConfirm={handleBookingDeletion}
         />
+      )}
+      {showDeletingAlert && (
+        <div>
+          <div className="deleting-overlay"></div>
+          <div className="deleting">
+            <p>Deleting...</p>
+          </div>
+        </div>
       )}
       {showBookingDeletedMessage && (
         <CustomAlert

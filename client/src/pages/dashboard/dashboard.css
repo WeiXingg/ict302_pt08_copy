@@ -14,7 +14,7 @@
   margin-bottom: 20px;
   margin-left: 20px;
   margin-right: 20px;
-  background-color:snow;
+  background-color: snow;
 }
 
 .calendar-header {
@@ -40,7 +40,7 @@
 .calendar-day {
   border: 1px solid #000000;
   border-radius: 5px;
-  position: relative; 
+  position: relative;
   height: 180px;
   overflow-y: auto;
 }
@@ -100,7 +100,8 @@
   margin: 0 10px;
 }
 
-.delete, .clear {
+.delete,
+.clear {
   padding: 8px 16px;
   background-color: #E12744;
   color: #FFF;
@@ -110,6 +111,38 @@
   width: 150px;
 }
 
-.delete:hover, .clear:hover {
+.delete:hover,
+.clear:hover {
   background-color: #B51D38;
+}
+
+.deleting-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+}
+
+.deleting {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #FFF;
+  border: 1px solid #CCC;
+  border-radius: 5px;
+  padding: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 1001;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.deleting p {
+  margin: 0;
 }

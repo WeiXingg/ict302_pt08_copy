@@ -170,14 +170,11 @@ const Booking = () => {
 
                     sendEmail(selectedLecturer, lecturerEmail, user.username, date.toLocaleString(), calendarString, process.env.REACT_APP_LECTURER_BOOKING_TEMPLATE_ID)
                         .then(() => {
-                            // Send email to student
                             sendEmail(user.username, user.email, selectedLecturer, date.toLocaleString(), calendarString, process.env.REACT_APP_STUDENT_BOOKING_TEMPLATE_ID)
                                 .then(() => {
                                     setIsScheduled(true);
                                 });
                         });
-                    // sendEmail(selectedLecturer, lecturerEmail, user.username, date.toLocaleString(), calendarString, process.env.REACT_APP_LECTURER_BOOKING_TEMPLATE_ID);
-                    // sendEmail(user.username, user.email, selectedLecturer, date.toLocaleString(), calendarString, process.env.REACT_APP_STUDENT_BOOKING_TEMPLATE_ID);
 
                     setIsScheduled(true);
                 } else {

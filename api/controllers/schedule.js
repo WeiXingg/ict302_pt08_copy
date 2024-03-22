@@ -29,6 +29,16 @@ const retrieveBookings = async (req, res) => {
     }
 };
 
+const retrieveEmail = async (req, res) => {
+    try {
+        const user = await User.findOne({ username: req.query.username });
+        return res.status(200).json({ email: user.email });
+    } catch (err) {
+        console.error("Error retrieving email.", err);
+        res.status(500).json({ message: "Internal server error" });
+    }
+};
+
 const deleteBookedDate = async (req, res) => {
     try {
         const { username, date } = req.params;
@@ -53,4 +63,4 @@ const deleteBookedDate = async (req, res) => {
     }
 };
 
-module.exports = { retrieveLecturers, retrieveBookings, deleteBookedDate };
+module.exports = { retrieveLecturers, retrieveBookings, retrieveEmail, deleteBookedDate };

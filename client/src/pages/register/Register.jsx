@@ -101,11 +101,11 @@ const Register = () => {
     };
 
     const validateStudentId = (id) => {
-        return /^\d{7}$/.test(id);
+        return /^\d{8}$/.test(id);
     };
 
     const validateStaffId = (id) => {
-        return /^\d{7}$/.test(id);
+        return /^\d{8}$/.test(id);
     };
 
     const validateEmail = (email) => {
@@ -189,7 +189,7 @@ const Register = () => {
                                 />
                                 {!isValidStudentId &&
                                     <div
-                                        className="error-message">Please enter a valid student ID (7 digits).
+                                        className="error-message">Please enter a valid student ID (8 digits).
                                     </div>
                                 }
                             </div>
@@ -213,7 +213,7 @@ const Register = () => {
                                 />
                                 {!isValidStaffId &&
                                     <div
-                                        className="error-message">Please enter a valid staff ID (7 digits).
+                                        className="error-message">Please enter a valid staff ID (8 digits).
                                     </div>
                                 }
                             </div>

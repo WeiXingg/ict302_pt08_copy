@@ -81,7 +81,7 @@ const Upload = () => {
     const sendEmail = (to_name, to_email) => {
         emailjs.send(
             process.env.REACT_APP_SERVICE_ID,
-            process.env.REACT_APP_TEMPLATE_ID,
+            process.env.REACT_APP_UPLOAD_TEMPLATE_ID,
             {
                 to_name,
                 to_email,

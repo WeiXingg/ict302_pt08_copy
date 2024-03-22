@@ -8,6 +8,7 @@ import DayTimePicker from "@mooncake-dev/react-day-time-picker"
 import CustomAlert from "../../components/alert/Alert"
 import CheckToken from "../../hooks/CheckToken"
 import ical from "ical-generator"
+import emailjs from "emailjs-com"
 
 const Booking = () => {
     const apiUrl = process.env.REACT_APP_API;
@@ -139,6 +140,9 @@ const Booking = () => {
                 });
                 if (updateBooked.ok) {
 
+                    const selectedLecturerInfo = lecturer.find(lecturer => lecturer.username === selectedLecturer);
+                    const lecturerEmail = selectedLecturerInfo.email;
+
                     const cal = ical({
                         domain: "https://ict302-pt08.vercel.app/",
                         name: "Appointment",
@@ -148,11 +152,11 @@ const Booking = () => {
                         start: date,
                         end: new Date(date.getTime() + 30 * 60 * 1000),
                         summary: "Appointment with Lecturer/Student",
-                        description: "Please RSVP",
+                        description: "",
                         location: "Microsoft Teams",
                         organizer: {
                             name: selectedLecturer,
-                            email: "no-email@example.com"
+                            email: lecturerEmail,
                         },
                         attendees: [
                             {
@@ -162,12 +166,10 @@ const Booking = () => {
                         ],
                     });
 
-                    // Convert iCalendar object to string
                     const calendarString = cal.toString();
 
-                    // Download the iCalendar file
-                    downloadICS(calendarString, "booking_event.ics");
-
+                    sendEmail(selectedLecturer, lecturerEmail, user.username, date.toLocaleString(), calendarString);
+                    sendEmail(user.username, user.email, selectedLecturer, date.toLocaleString(), calendarString);
 
                     setIsScheduled(true);
                 } else {
@@ -177,21 +179,38 @@ const Booking = () => {
                 console.error("response not ok.");
             }
         } catch (error) {
-            console.error("Error.", error.message);
+            console.error("Error.", error);
         }
         setIsScheduling(false);
     };
 
-    const downloadICS = (calendarString, filename) => {
+    const sendEmail = (to_name, to_email, with_name, date, calendarString) => {
         const blob = new Blob([calendarString], { type: "text/calendar" });
-        const url = window.URL.createObjectURL(blob);
-        const a = document.createElement("a");
-        a.href = url;
-        a.download = filename;
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        window.URL.revokeObjectURL(url);
+        const reader = new FileReader();
+        reader.readAsDataURL(blob);
+
+        reader.onload = () => {
+            const attachmentBase64 = reader.result.split(",")[1];
+
+            emailjs.send(
+                process.env.REACT_APP_SERVICE_ID,
+                process.env.REACT_APP_BOOKING_TEMPLATE_ID,
+                {
+                    to_name,
+                    to_email,
+                    with_name,
+                    date,
+                    attachment: attachmentBase64,
+                },
+                process.env.REACT_APP_PUBLIC_KEY
+            )
+                .then((response) => {
+                    console.log("Email sent successfully!", response.status, response.text);
+                })
+                .catch((error) => {
+                    console.error("Email sending failed:", error);
+                });
+        };
     };
 
     const timeSlotValidator = (slotTime) => {

@@ -168,8 +168,8 @@ const Booking = () => {
 
                     const calendarString = cal.toString();
 
-                    sendEmail(selectedLecturer, lecturerEmail, user.username, date.toLocaleString(), calendarString);
-                    sendEmail(user.username, user.email, selectedLecturer, date.toLocaleString(), calendarString);
+                    sendEmail(selectedLecturer, lecturerEmail, user.username, date.toLocaleString(), calendarString, process.env.REACT_APP_LECTURER_BOOKING_TEMPLATE_ID);
+                    sendEmail(user.username, user.email, selectedLecturer, date.toLocaleString(), calendarString, process.env.REACT_APP_STUDENT_BOOKING_TEMPLATE_ID);
 
                     setIsScheduled(true);
                 } else {
@@ -184,7 +184,7 @@ const Booking = () => {
         setIsScheduling(false);
     };
 
-    const sendEmail = (to_name, to_email, with_name, date, calendarString) => {
+    const sendEmail = (to_name, to_email, with_name, date, calendarString, templateId) => {
         const blob = new Blob([calendarString], { type: "text/calendar" });
         const reader = new FileReader();
         reader.readAsDataURL(blob);
@@ -194,7 +194,7 @@ const Booking = () => {
 
             emailjs.send(
                 process.env.REACT_APP_SERVICE_ID,
-                process.env.REACT_APP_BOOKING_TEMPLATE_ID,
+                templateId,
                 {
                     to_name,
                     to_email,

@@ -125,7 +125,7 @@ const Register = () => {
                     <h2 className="registerTitle">Get Started with AppointMate</h2>
                     <form onSubmit={handleSubmit}>
                         <div className="form-group">
-                            <label htmlFor="userType">User Type</label>
+                            <label>User Type</label>
                             <select
                                 id="userType"
                                 value={usertype}
@@ -137,7 +137,7 @@ const Register = () => {
                             </select>
                         </div>
                         <div className="form-group">
-                            <label htmlFor="name">Username</label>
+                            <label>Username</label>
                             <input
                                 type="text"
                                 id="name"
@@ -149,7 +149,7 @@ const Register = () => {
                             />
                         </div>
                         <div className="form-group">
-                            <label htmlFor="email">Email Address</label>
+                            <label>Email Address</label>
                             <input
                                 type="email"
                                 id="email"
@@ -172,7 +172,7 @@ const Register = () => {
                         </div>
                         {usertype === "student" && (
                             <div className="form-group">
-                                <label htmlFor="studentid">Student ID</label>
+                                <label>Student ID</label>
                                 <input
                                     type="text"
                                     id="studentid"
@@ -196,7 +196,7 @@ const Register = () => {
                         )}
                         {usertype === "staff" && (
                             <div className="form-group">
-                                <label htmlFor="staffid">Staff ID</label>
+                                <label>Staff ID</label>
                                 <input
                                     type="text"
                                     id="staffid"
@@ -219,7 +219,7 @@ const Register = () => {
                             </div>
                         )}
                         <div className="form-group">
-                            <label htmlFor="password">Password</label>
+                            <label>Password</label>
                             <input
                                 type="password"
                                 id="password"
@@ -241,7 +241,7 @@ const Register = () => {
                             }
                         </div>
                         <div className="form-group">
-                            <label htmlFor="confirmPassword">Confirm Password</label>
+                            <label>Confirm Password</label>
                             <input
                                 type="password"
                                 id="confirmPassword"

@@ -119,9 +119,9 @@ const Dashboard = () => {
       });
       if (response.ok) {
         const formattedDate = new Date(selectedBooking.date)
-        sendEmail(selectedBooking.lecturer, lecturerEmail, selectedBooking.student, formattedDate.toLocaleDateString())
+        sendEmail(selectedBooking.lecturer, lecturerEmail, selectedBooking.student, formattedDate.toLocaleString())
           .then(() => {
-            sendEmail(selectedBooking.student, studentEmail, selectedBooking.lecturer, formattedDate.toLocaleDateString())
+            sendEmail(selectedBooking.student, studentEmail, selectedBooking.lecturer, formattedDate.toLocaleString())
               .then(() => {
                 setShowDeletingAlert(false);
                 setShowBookingDeletedMessage(true);

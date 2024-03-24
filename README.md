@@ -12,7 +12,7 @@ If you don't have Yarn installed on your system, you can install it using npm:
 
 4. Install Dependencies:
 Navigate to both the API and Client folders separately using the terminal or command prompt, and then run the following command in each folder to install all the dependencies:
-yarn
+```bashyarn```
 
 5. Set Environment Variables:
-Ensure you have set up the necessary environment variables for both the API and Client applications. Refer to the provided .env files for the names of the variables used.
+Ensure you have set up the necessary environment variables for both the API and Client applications. Refer to the provided text file for the names of the variables used.
